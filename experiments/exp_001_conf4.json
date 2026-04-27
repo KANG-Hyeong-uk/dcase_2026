@@ -1,0 +1,111 @@
+{
+  "exp_id": "exp_001",
+  "description": "confidence >= 4 filter, baseline architecture, plain CE",
+  "config": {
+    "conf_threshold": 4,
+    "hier_loss": false,
+    "lambda_top": null,
+    "lambda_contr": null,
+    "tau": null,
+    "hidden_size": 128,
+    "dropout": 0.1,
+    "epochs": 100,
+    "batch_size": 64,
+    "lr": 0.001,
+    "k_folds": 5,
+    "mode": "both",
+    "seed": 1821,
+    "scheduler": "step",
+    "patience": 5,
+    "early_stopping_factor": 3
+  },
+  "results": {
+    "fold_avg": {
+      "accuracy": 0.873042,
+      "top_accuracy": 0.936227,
+      "macro_accuracy": 0.785232,
+      "macro_top_accuracy": 0.883223,
+      "hierarchical_accuracy": 0.834228,
+      "hierarchical_precision": 0.830617,
+      "hierarchical_recall": 0.821979,
+      "hierarchical_f1": 0.821573
+    },
+    "fold_std": {
+      "accuracy": 0.009409,
+      "top_accuracy": 0.00345,
+      "macro_accuracy": 0.016081,
+      "macro_top_accuracy": 0.011188,
+      "hierarchical_accuracy": 0.013311,
+      "hierarchical_precision": 0.013527,
+      "hierarchical_recall": 0.013956,
+      "hierarchical_f1": 0.013197
+    },
+    "fold_details": [
+      {
+        "fold": 0,
+        "accuracy": 0.854945,
+        "top_accuracy": 0.92967,
+        "macro_accuracy": 0.755237,
+        "macro_top_accuracy": 0.866421,
+        "hierarchical_accuracy": 0.810829,
+        "hierarchical_precision": 0.809383,
+        "hierarchical_recall": 0.796931,
+        "hierarchical_f1": 0.800077
+      },
+      {
+        "fold": 1,
+        "accuracy": 0.881965,
+        "top_accuracy": 0.93695,
+        "macro_accuracy": 0.793141,
+        "macro_top_accuracy": 0.881789,
+        "hierarchical_accuracy": 0.837465,
+        "hierarchical_precision": 0.824892,
+        "hierarchical_recall": 0.826384,
+        "hierarchical_f1": 0.81673
+      },
+      {
+        "fold": 2,
+        "accuracy": 0.875367,
+        "top_accuracy": 0.937683,
+        "macro_accuracy": 0.796452,
+        "macro_top_accuracy": 0.897438,
+        "hierarchical_accuracy": 0.846945,
+        "hierarchical_precision": 0.843632,
+        "hierarchical_recall": 0.834322,
+        "hierarchical_f1": 0.835515
+      },
+      {
+        "fold": 3,
+        "accuracy": 0.878299,
+        "top_accuracy": 0.939883,
+        "macro_accuracy": 0.799203,
+        "macro_top_accuracy": 0.893338,
+        "hierarchical_accuracy": 0.84627,
+        "hierarchical_precision": 0.84666,
+        "hierarchical_recall": 0.834503,
+        "hierarchical_f1": 0.835324
+      },
+      {
+        "fold": 4,
+        "accuracy": 0.874633,
+        "top_accuracy": 0.93695,
+        "macro_accuracy": 0.782129,
+        "macro_top_accuracy": 0.877131,
+        "hierarchical_accuracy": 0.82963,
+        "hierarchical_precision": 0.828518,
+        "hierarchical_recall": 0.817755,
+        "hierarchical_f1": 0.820218
+      }
+    ]
+  },
+  "vs_baseline_h_acc": "+3.97%",
+  "paper_reference": "Anastasopoulou et al., DCASE Workshop 2025 \u2014 confidence>=4: +9% 2nd / +5% top expected",
+  "observed_effect": {
+    "h_acc_delta": 3.97,
+    "top_acc_delta": 4.74,
+    "macro_2nd_delta": 4.5
+  },
+  "samples_used": 6821,
+  "samples_filtered_out": 4135,
+  "timestamp": "2026-04-27 17:08"
+}

@@ -4,13 +4,17 @@ import torch.nn.functional as F
 
 
 class CrossEntropyLoss(nn.Module):
-    def __init__(self, label_smoothing=0.01):
+    def __init__(self, label_smoothing=0.01, class_weights=None):
         super().__init__()
-        self.cross_entropy = nn.CrossEntropyLoss(label_smoothing=label_smoothing)
+        self.cross_entropy = nn.CrossEntropyLoss(
+            label_smoothing=label_smoothing,
+            weight=class_weights,
+        )
 
     def forward(self, logits, labels, z=None, top_labels=None):
-        return self.cross_entropy(logits, labels), {
-            'ce': self.cross_entropy(logits, labels).detach(),
+        l = self.cross_entropy(logits, labels)
+        return l, {
+            'ce': l.detach(),
             'top': torch.tensor(0.0, device=logits.device),
             'contr': torch.tensor(0.0, device=logits.device),
         }
@@ -32,7 +36,7 @@ class HierarchicalLoss(nn.Module):
 
     def __init__(self, subclass_to_topclass_tensor, num_top_classes,
                  lambda_top=0.3, lambda_contr=0.1, tau=0.07,
-                 label_smoothing=0.01):
+                 label_smoothing=0.01, class_weights=None):
         super().__init__()
         sub2top = subclass_to_topclass_tensor.long()
         num_sub = int(sub2top.numel())
@@ -49,7 +53,7 @@ class HierarchicalLoss(nn.Module):
         self.lambda_top = float(lambda_top)
         self.lambda_contr = float(lambda_contr)
         self.tau = float(tau)
-        self.ce = nn.CrossEntropyLoss(label_smoothing=label_smoothing)
+        self.ce = nn.CrossEntropyLoss(label_smoothing=label_smoothing, weight=class_weights)
 
     def forward(self, logits, labels, z=None, top_labels=None):
         l_ce = self.ce(logits, labels)

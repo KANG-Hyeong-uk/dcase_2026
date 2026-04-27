@@ -227,6 +227,9 @@ def parse_args():
     p.add_argument('--lambda_contr', type=float, default=0.1)
     p.add_argument('--tau', type=float, default=0.07)
 
+    p.add_argument('--class_weights', type=str, default='none', choices=['none', 'balanced', 'sqrt'],
+                   help="Per-class weights for CE: 'balanced' = N/(K*count), 'sqrt' = sqrt(N/count) (less aggressive)")
+
     p.add_argument('--smoke_test', action='store_true',
                    help='Run only fold 0 with epochs=2 to validate the pipeline.')
     return p.parse_args()
@@ -323,6 +326,18 @@ def main():
                     mode=mode,
                 ).to(device)
 
+                cw_tensor = None
+                if args.class_weights != 'none':
+                    counts = np.bincount(train_df['class_idx'].values, minlength=len(class_dict)).astype(float)
+                    counts = np.where(counts == 0, 1.0, counts)
+                    if args.class_weights == 'balanced':
+                        w = counts.sum() / (len(class_dict) * counts)
+                    elif args.class_weights == 'sqrt':
+                        w = np.sqrt(counts.sum() / counts)
+                    w = w * (len(class_dict) / w.sum())
+                    cw_tensor = torch.tensor(w, dtype=torch.float32, device=device)
+                    print(f"  [class_weights={args.class_weights}] min={w.min():.3f} max={w.max():.3f} mean={w.mean():.3f}")
+
                 if args.hier_loss:
                     sub2top_tensor = build_class_to_topclass_tensor(class_dict, top_class_dict, device)
                     classification_criterion = HierarchicalLoss(
@@ -331,9 +346,10 @@ def main():
                         lambda_top=args.lambda_top,
                         lambda_contr=args.lambda_contr,
                         tau=args.tau,
+                        class_weights=cw_tensor,
                     ).to(device)
                 else:
-                    classification_criterion = CrossEntropyLoss()
+                    classification_criterion = CrossEntropyLoss(class_weights=cw_tensor).to(device)
 
                 output_dir = os.path.join(model_output, mode, f"fold_{fold}")
                 os.makedirs(output_dir, exist_ok=True)
