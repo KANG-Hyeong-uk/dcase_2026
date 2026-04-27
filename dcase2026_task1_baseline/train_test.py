@@ -5,7 +5,10 @@ import json
 import os
 import numpy as np
 import pandas as pd
-from sklearn.model_selection import StratifiedShuffleSplit, StratifiedKFold
+from sklearn.model_selection import (
+    StratifiedShuffleSplit, StratifiedKFold,
+    GroupKFold, StratifiedGroupKFold, GroupShuffleSplit,
+)
 import torch
 from torch.utils.data import DataLoader
 import torch.nn as nn
@@ -230,6 +233,11 @@ def parse_args():
     p.add_argument('--class_weights', type=str, default='none', choices=['none', 'balanced', 'sqrt'],
                    help="Per-class weights for CE: 'balanced' = N/(K*count), 'sqrt' = sqrt(N/count) (less aggressive)")
 
+    p.add_argument('--fold_strategy', type=str, default='random',
+                   choices=['random', 'group', 'stratified_group'],
+                   help="Cross-validation split strategy. 'random'=StratifiedKFold by class (default, EXP-008). "
+                        "'group'=GroupKFold by uploader. 'stratified_group'=StratifiedGroupKFold (recommended for private LB proxy).")
+
     p.add_argument('--smoke_test', action='store_true',
                    help='Run only fold 0 with epochs=2 to validate the pipeline.')
     return p.parse_args()
@@ -260,6 +268,22 @@ def main():
         full_df = full_df[full_df['index'].isin(high_conf['sound_id'])].reset_index(drop=True)
         print(f"[conf-filter] {before} -> {len(full_df)} samples (kept conf>={args.conf_threshold})")
 
+    if args.fold_strategy in ('group', 'stratified_group'):
+        meta_df = pd.read_csv(dataset_path)
+        meta_df['sound_id'] = meta_df['sound_id'].astype(str).str.strip()
+        full_df['index'] = full_df['index'].astype(str).str.strip()
+        full_df = full_df.merge(
+            meta_df[['sound_id', 'uploader']],
+            left_on='index', right_on='sound_id', how='left'
+        )
+        n_missing = int(full_df['uploader'].isna().sum())
+        if n_missing > 0:
+            print(f"[fold-strategy] WARNING: {n_missing} samples missing uploader -> using sound_id as fallback group.")
+            full_df['uploader'] = full_df['uploader'].fillna(full_df['index'])
+        full_df = full_df.drop(columns=['sound_id'])
+        print(f"[fold-strategy={args.fold_strategy}] joined uploader column "
+              f"({full_df['uploader'].nunique()} unique uploaders, {len(full_df)} samples)")
+
     epochs = 2 if args.smoke_test else args.epochs
 
     datasets = {f'{dataset_name} full': {'df': full_df}}
@@ -270,9 +294,35 @@ def main():
         print(f"\n=== Dataset: {dataset} ===")
         database = dataset_info['df']
         labels = database["class_idx"].tolist()
+        n_splits = max(args.k_folds, 2)
 
-        skf = StratifiedKFold(n_splits=max(args.k_folds, 2), shuffle=True, random_state=seed)
-        all_splits = list(skf.split(np.zeros(len(labels)), labels))
+        groups = None
+        if args.fold_strategy in ('group', 'stratified_group'):
+            groups = database['uploader'].values
+
+        if args.fold_strategy == 'random':
+            skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=seed)
+            all_splits = list(skf.split(np.zeros(len(labels)), labels))
+        elif args.fold_strategy == 'group':
+            gkf = GroupKFold(n_splits=n_splits)
+            all_splits = list(gkf.split(np.zeros(len(labels)), labels, groups=groups))
+        elif args.fold_strategy == 'stratified_group':
+            sgkf = StratifiedGroupKFold(n_splits=n_splits, shuffle=True, random_state=seed)
+            all_splits = list(sgkf.split(np.zeros(len(labels)), labels, groups=groups))
+        else:
+            raise ValueError(f"Unknown fold_strategy: {args.fold_strategy}")
+
+        for fi, (tr_idx, te_idx) in enumerate(all_splits):
+            tr_classes = len(np.unique([labels[i] for i in tr_idx]))
+            te_classes = len(np.unique([labels[i] for i in te_idx]))
+            extra = ""
+            if groups is not None:
+                tr_groups = len(np.unique(groups[tr_idx]))
+                te_groups = len(np.unique(groups[te_idx]))
+                overlap = len(set(groups[tr_idx]) & set(groups[te_idx]))
+                extra = f" | uploaders tr={tr_groups} te={te_groups} overlap={overlap}"
+            print(f"  [fold {fi}] train={len(tr_idx)} (cls={tr_classes}) test={len(te_idx)} (cls={te_classes}){extra}")
+
         if args.smoke_test:
             all_splits = all_splits[:1]
 
@@ -283,8 +333,13 @@ def main():
                 print(f"\n==== Fold {fold} ====")
 
                 trainval_labels = [labels[i] for i in trainval_idx]
-                sss = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=seed)
-                train_idx_rel, val_idx_rel = next(sss.split(np.zeros(len(trainval_labels)), trainval_labels))
+                if args.fold_strategy == 'random':
+                    sss = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=seed)
+                    train_idx_rel, val_idx_rel = next(sss.split(np.zeros(len(trainval_labels)), trainval_labels))
+                else:
+                    trainval_groups = groups[trainval_idx]
+                    gss = GroupShuffleSplit(n_splits=1, test_size=0.2, random_state=seed)
+                    train_idx_rel, val_idx_rel = next(gss.split(np.zeros(len(trainval_labels)), trainval_labels, groups=trainval_groups))
                 train_idx = [trainval_idx[i] for i in train_idx_rel]
                 val_idx = [trainval_idx[i] for i in val_idx_rel]
 
