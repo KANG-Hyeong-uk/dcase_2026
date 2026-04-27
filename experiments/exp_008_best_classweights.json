@@ -1,0 +1,103 @@
+{
+  "exp_id": "exp_008",
+  "description": "BEST base (EXP-006: conf>=4 + hier loss + h=256) + class_weights=balanced",
+  "config": {
+    "conf_threshold": 4,
+    "hier_loss": true,
+    "lambda_top": 0.3,
+    "lambda_contr": 0.1,
+    "tau": 0.07,
+    "hidden_size": 256,
+    "dropout": 0.1,
+    "epochs": 100,
+    "batch_size": 64,
+    "lr": 0.001,
+    "k_folds": 5,
+    "mode": "both",
+    "seed": 1821,
+    "class_weights": "balanced"
+  },
+  "results": {
+    "fold_avg": {
+      "accuracy": 0.872746,
+      "top_accuracy": 0.936226,
+      "macro_accuracy": 0.811606,
+      "macro_top_accuracy": 0.894289,
+      "hierarchical_accuracy": 0.852947,
+      "hierarchical_precision": 0.835833,
+      "hierarchical_recall": 0.842612,
+      "hierarchical_f1": 0.836988
+    },
+    "fold_std": {
+      "accuracy": 0.003977,
+      "top_accuracy": 0.00223,
+      "macro_accuracy": 0.008208,
+      "macro_top_accuracy": 0.0065,
+      "hierarchical_accuracy": 0.006347,
+      "hierarchical_precision": 0.008343,
+      "hierarchical_recall": 0.006659,
+      "hierarchical_f1": 0.006571
+    },
+    "fold_details": [
+      {
+        "fold": 0,
+        "accuracy": 0.872527,
+        "top_accuracy": 0.937729,
+        "macro_accuracy": 0.815736,
+        "macro_top_accuracy": 0.890734,
+        "hierarchical_accuracy": 0.853235,
+        "hierarchical_precision": 0.837477,
+        "hierarchical_recall": 0.84386,
+        "hierarchical_f1": 0.838353
+      },
+      {
+        "fold": 1,
+        "accuracy": 0.880499,
+        "top_accuracy": 0.934018,
+        "macro_accuracy": 0.813209,
+        "macro_top_accuracy": 0.886811,
+        "hierarchical_accuracy": 0.85001,
+        "hierarchical_precision": 0.847792,
+        "hierarchical_recall": 0.84081,
+        "hierarchical_f1": 0.84262
+      },
+      {
+        "fold": 2,
+        "accuracy": 0.870235,
+        "top_accuracy": 0.933284,
+        "macro_accuracy": 0.798412,
+        "macro_top_accuracy": 0.891204,
+        "hierarchical_accuracy": 0.844808,
+        "hierarchical_precision": 0.831068,
+        "hierarchical_recall": 0.833209,
+        "hierarchical_f1": 0.828498
+      },
+      {
+        "fold": 3,
+        "accuracy": 0.870235,
+        "top_accuracy": 0.93695,
+        "macro_accuracy": 0.822928,
+        "macro_top_accuracy": 0.905442,
+        "hierarchical_accuracy": 0.864185,
+        "hierarchical_precision": 0.839796,
+        "hierarchical_recall": 0.853871,
+        "hierarchical_f1": 0.845121
+      },
+      {
+        "fold": 4,
+        "accuracy": 0.870235,
+        "top_accuracy": 0.93915,
+        "macro_accuracy": 0.807744,
+        "macro_top_accuracy": 0.897255,
+        "hierarchical_accuracy": 0.852499,
+        "hierarchical_precision": 0.823032,
+        "hierarchical_recall": 0.841311,
+        "hierarchical_f1": 0.830348
+      }
+    ]
+  },
+  "vs_baseline_h_acc": "+5.84%",
+  "vs_exp006_h_acc": "+0.86%",
+  "note": "class_weights=balanced lifted macro_2nd from 79.76% to 81.16% (+1.40%) \u2014 confirms class imbalance was the bottleneck for the rare classes after conf>=4 filter (11.2x ratio).",
+  "timestamp": "2026-04-27 20:14"
+}

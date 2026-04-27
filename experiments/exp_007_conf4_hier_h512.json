@@ -1,0 +1,103 @@
+{
+  "exp_id": "exp_007",
+  "description": "conf>=4 + hier loss + hidden_size=512 + dropout=0.15",
+  "config": {
+    "conf_threshold": 4,
+    "hier_loss": true,
+    "lambda_top": 0.3,
+    "lambda_contr": 0.1,
+    "tau": 0.07,
+    "hidden_size": 512,
+    "dropout": 0.15,
+    "epochs": 100,
+    "batch_size": 64,
+    "lr": 0.001,
+    "k_folds": 5,
+    "mode": "both",
+    "seed": 1821,
+    "class_weights": "none"
+  },
+  "results": {
+    "fold_avg": {
+      "accuracy": 0.875825,
+      "top_accuracy": 0.936959,
+      "macro_accuracy": 0.796059,
+      "macro_top_accuracy": 0.887245,
+      "hierarchical_accuracy": 0.841652,
+      "hierarchical_precision": 0.838731,
+      "hierarchical_recall": 0.830254,
+      "hierarchical_f1": 0.83108
+    },
+    "fold_std": {
+      "accuracy": 0.008278,
+      "top_accuracy": 0.002318,
+      "macro_accuracy": 0.019452,
+      "macro_top_accuracy": 0.005863,
+      "hierarchical_accuracy": 0.012332,
+      "hierarchical_precision": 0.010905,
+      "hierarchical_recall": 0.014088,
+      "hierarchical_f1": 0.012517
+    },
+    "fold_details": [
+      {
+        "fold": 0,
+        "accuracy": 0.871062,
+        "top_accuracy": 0.936996,
+        "macro_accuracy": 0.769759,
+        "macro_top_accuracy": 0.878252,
+        "hierarchical_accuracy": 0.824005,
+        "hierarchical_precision": 0.82339,
+        "hierarchical_recall": 0.810444,
+        "hierarchical_f1": 0.814035
+      },
+      {
+        "fold": 1,
+        "accuracy": 0.891496,
+        "top_accuracy": 0.93915,
+        "macro_accuracy": 0.826043,
+        "macro_top_accuracy": 0.89639,
+        "hierarchical_accuracy": 0.861217,
+        "hierarchical_precision": 0.854611,
+        "hierarchical_recall": 0.852423,
+        "hierarchical_f1": 0.851681
+      },
+      {
+        "fold": 2,
+        "accuracy": 0.868768,
+        "top_accuracy": 0.932551,
+        "macro_accuracy": 0.798553,
+        "macro_top_accuracy": 0.888802,
+        "hierarchical_accuracy": 0.843677,
+        "hierarchical_precision": 0.8302,
+        "hierarchical_recall": 0.832396,
+        "hierarchical_f1": 0.827052
+      },
+      {
+        "fold": 3,
+        "accuracy": 0.870968,
+        "top_accuracy": 0.938416,
+        "macro_accuracy": 0.781224,
+        "macro_top_accuracy": 0.887706,
+        "hierarchical_accuracy": 0.834465,
+        "hierarchical_precision": 0.841658,
+        "hierarchical_recall": 0.821155,
+        "hierarchical_f1": 0.826207
+      },
+      {
+        "fold": 4,
+        "accuracy": 0.876833,
+        "top_accuracy": 0.937683,
+        "macro_accuracy": 0.804715,
+        "macro_top_accuracy": 0.885073,
+        "hierarchical_accuracy": 0.844894,
+        "hierarchical_precision": 0.843798,
+        "hierarchical_recall": 0.83485,
+        "hierarchical_f1": 0.836423
+      }
+    ]
+  },
+  "vs_baseline_h_acc": "+4.72%",
+  "vs_exp006_h_acc": "-0.26%",
+  "note": "hidden=512 slightly UNDERperforms hidden=256 (overfitting on 4k train samples). EXP-006 is the best base config.",
+  "timestamp": "2026-04-27 19:29"
+}

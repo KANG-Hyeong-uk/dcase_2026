@@ -1,0 +1,103 @@
+{
+  "exp_id": "exp_006",
+  "description": "conf>=4 + hier loss + hidden_size=256",
+  "config": {
+    "conf_threshold": 4,
+    "hier_loss": true,
+    "lambda_top": 0.3,
+    "lambda_contr": 0.1,
+    "tau": 0.07,
+    "hidden_size": 256,
+    "dropout": 0.1,
+    "epochs": 100,
+    "batch_size": 64,
+    "lr": 0.001,
+    "k_folds": 5,
+    "mode": "both",
+    "seed": 1821,
+    "class_weights": "none"
+  },
+  "results": {
+    "fold_avg": {
+      "accuracy": 0.874504,
+      "top_accuracy": 0.936372,
+      "macro_accuracy": 0.797613,
+      "macro_top_accuracy": 0.890983,
+      "hierarchical_accuracy": 0.844298,
+      "hierarchical_precision": 0.839631,
+      "hierarchical_recall": 0.832626,
+      "hierarchical_f1": 0.833744
+    },
+    "fold_std": {
+      "accuracy": 0.004737,
+      "top_accuracy": 0.005037,
+      "macro_accuracy": 0.006145,
+      "macro_top_accuracy": 0.006187,
+      "hierarchical_accuracy": 0.002937,
+      "hierarchical_precision": 0.006992,
+      "hierarchical_recall": 0.003225,
+      "hierarchical_f1": 0.005391
+    },
+    "fold_details": [
+      {
+        "fold": 0,
+        "accuracy": 0.880586,
+        "top_accuracy": 0.944322,
+        "macro_accuracy": 0.800769,
+        "macro_top_accuracy": 0.884093,
+        "hierarchical_accuracy": 0.842431,
+        "hierarchical_precision": 0.848678,
+        "hierarchical_recall": 0.832015,
+        "hierarchical_f1": 0.838538
+      },
+      {
+        "fold": 1,
+        "accuracy": 0.876833,
+        "top_accuracy": 0.928886,
+        "macro_accuracy": 0.805518,
+        "macro_top_accuracy": 0.885007,
+        "hierarchical_accuracy": 0.845262,
+        "hierarchical_precision": 0.841626,
+        "hierarchical_recall": 0.835326,
+        "hierarchical_f1": 0.837558
+      },
+      {
+        "fold": 2,
+        "accuracy": 0.876833,
+        "top_accuracy": 0.93695,
+        "macro_accuracy": 0.800946,
+        "macro_top_accuracy": 0.895594,
+        "hierarchical_accuracy": 0.84827,
+        "hierarchical_precision": 0.84479,
+        "hierarchical_recall": 0.836439,
+        "hierarchical_f1": 0.837988
+      },
+      {
+        "fold": 3,
+        "accuracy": 0.867302,
+        "top_accuracy": 0.934018,
+        "macro_accuracy": 0.791311,
+        "macro_top_accuracy": 0.900251,
+        "hierarchical_accuracy": 0.845781,
+        "hierarchical_precision": 0.830923,
+        "hierarchical_recall": 0.832163,
+        "hierarchical_f1": 0.829209
+      },
+      {
+        "fold": 4,
+        "accuracy": 0.870968,
+        "top_accuracy": 0.937683,
+        "macro_accuracy": 0.789519,
+        "macro_top_accuracy": 0.88997,
+        "hierarchical_accuracy": 0.839744,
+        "hierarchical_precision": 0.832137,
+        "hierarchical_recall": 0.827188,
+        "hierarchical_f1": 0.825425
+      }
+    ]
+  },
+  "vs_baseline_h_acc": "+4.98%",
+  "vs_exp005_h_acc": "+0.41%",
+  "note": "hidden 256 reduces fold std from 1.21% to 0.29% (4x more stable)",
+  "timestamp": "2026-04-27 18:35"
+}

@@ -1,0 +1,93 @@
+{
+  "exp_id": "exp_009",
+  "description": "TTA (Gaussian noise std=0.001, n_aug=5) on top of exp_008_best_classweights",
+  "base_exp": "exp_008_best_classweights",
+  "config": {
+    "n_aug": 5,
+    "noise_std": 0.001,
+    "mode": "both"
+  },
+  "results": {
+    "fold_avg": {
+      "accuracy": 0.872746,
+      "top_accuracy": 0.936226,
+      "macro_accuracy": 0.811542,
+      "macro_top_accuracy": 0.894225,
+      "hierarchical_accuracy": 0.852884,
+      "hierarchical_precision": 0.835969,
+      "hierarchical_recall": 0.842548,
+      "hierarchical_f1": 0.837
+    },
+    "fold_std": {
+      "accuracy": 0.004087,
+      "top_accuracy": 0.002548,
+      "macro_accuracy": 0.008507,
+      "macro_top_accuracy": 0.006536,
+      "hierarchical_accuracy": 0.00656,
+      "hierarchical_precision": 0.008522,
+      "hierarchical_recall": 0.006902,
+      "hierarchical_f1": 0.006897
+    },
+    "fold_details": [
+      {
+        "fold": 0,
+        "accuracy": 0.87326,
+        "top_accuracy": 0.938462,
+        "macro_accuracy": 0.816193,
+        "macro_top_accuracy": 0.891192,
+        "hierarchical_accuracy": 0.853693,
+        "hierarchical_precision": 0.838948,
+        "hierarchical_recall": 0.844318,
+        "hierarchical_f1": 0.839413
+      },
+      {
+        "fold": 1,
+        "accuracy": 0.880499,
+        "top_accuracy": 0.934018,
+        "macro_accuracy": 0.813209,
+        "macro_top_accuracy": 0.886811,
+        "hierarchical_accuracy": 0.85001,
+        "hierarchical_precision": 0.847792,
+        "hierarchical_recall": 0.84081,
+        "hierarchical_f1": 0.84262
+      },
+      {
+        "fold": 2,
+        "accuracy": 0.869501,
+        "top_accuracy": 0.932551,
+        "macro_accuracy": 0.797635,
+        "macro_top_accuracy": 0.890427,
+        "hierarchical_accuracy": 0.844031,
+        "hierarchical_precision": 0.830274,
+        "hierarchical_recall": 0.832432,
+        "hierarchical_f1": 0.8275
+      },
+      {
+        "fold": 3,
+        "accuracy": 0.870235,
+        "top_accuracy": 0.93695,
+        "macro_accuracy": 0.822928,
+        "macro_top_accuracy": 0.905442,
+        "hierarchical_accuracy": 0.864185,
+        "hierarchical_precision": 0.839796,
+        "hierarchical_recall": 0.853871,
+        "hierarchical_f1": 0.845121
+      },
+      {
+        "fold": 4,
+        "accuracy": 0.870235,
+        "top_accuracy": 0.93915,
+        "macro_accuracy": 0.807744,
+        "macro_top_accuracy": 0.897255,
+        "hierarchical_accuracy": 0.852499,
+        "hierarchical_precision": 0.823032,
+        "hierarchical_recall": 0.841311,
+        "hierarchical_f1": 0.830348
+      }
+    ]
+  },
+  "vs_baseline_h_acc": "+5.84%",
+  "vs_exp008_h_acc": "+0.00%",
+  "note": "TTA with noise_std=1e-3 (10x training noise) gave ZERO improvement over EXP-008. Model is already robust to small input perturbations. EXP-008 remains the final best.",
+  "timestamp": "2026-04-27 20:14"
+}

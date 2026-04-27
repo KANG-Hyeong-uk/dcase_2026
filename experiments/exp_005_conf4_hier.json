@@ -1,0 +1,104 @@
+{
+  "exp_id": "exp_005",
+  "description": "conf>=4 + L_Top + L_Contr hierarchical losses (paper B defaults)",
+  "config": {
+    "conf_threshold": 4,
+    "hier_loss": true,
+    "lambda_top": 0.3,
+    "lambda_contr": 0.1,
+    "tau": 0.07,
+    "hidden_size": 128,
+    "dropout": 0.1,
+    "epochs": 100,
+    "batch_size": 64,
+    "lr": 0.001,
+    "k_folds": 5,
+    "mode": "both",
+    "seed": 1821,
+    "scheduler": "step",
+    "class_weights": "none"
+  },
+  "results": {
+    "fold_avg": {
+      "accuracy": 0.873773,
+      "top_accuracy": 0.936227,
+      "macro_accuracy": 0.792789,
+      "macro_top_accuracy": 0.887608,
+      "hierarchical_accuracy": 0.840198,
+      "hierarchical_precision": 0.83442,
+      "hierarchical_recall": 0.828346,
+      "hierarchical_f1": 0.827772
+    },
+    "fold_std": {
+      "accuracy": 0.004996,
+      "top_accuracy": 0.004528,
+      "macro_accuracy": 0.012065,
+      "macro_top_accuracy": 0.012794,
+      "hierarchical_accuracy": 0.012123,
+      "hierarchical_precision": 0.021124,
+      "hierarchical_recall": 0.012049,
+      "hierarchical_f1": 0.013416
+    },
+    "fold_details": [
+      {
+        "fold": 0,
+        "accuracy": 0.866667,
+        "top_accuracy": 0.92967,
+        "macro_accuracy": 0.771399,
+        "macro_top_accuracy": 0.864944,
+        "hierarchical_accuracy": 0.818172,
+        "hierarchical_precision": 0.804718,
+        "hierarchical_recall": 0.806478,
+        "hierarchical_f1": 0.80457
+      },
+      {
+        "fold": 1,
+        "accuracy": 0.880499,
+        "top_accuracy": 0.941349,
+        "macro_accuracy": 0.797882,
+        "macro_top_accuracy": 0.902431,
+        "hierarchical_accuracy": 0.850156,
+        "hierarchical_precision": 0.870753,
+        "hierarchical_recall": 0.837088,
+        "hierarchical_f1": 0.846549
+      },
+      {
+        "fold": 2,
+        "accuracy": 0.871701,
+        "top_accuracy": 0.934018,
+        "macro_accuracy": 0.79254,
+        "macro_top_accuracy": 0.888731,
+        "hierarchical_accuracy": 0.840635,
+        "hierarchical_precision": 0.830708,
+        "hierarchical_recall": 0.828611,
+        "hierarchical_f1": 0.828159
+      },
+      {
+        "fold": 3,
+        "accuracy": 0.871701,
+        "top_accuracy": 0.934751,
+        "macro_accuracy": 0.80839,
+        "macro_top_accuracy": 0.896499,
+        "hierarchical_accuracy": 0.852445,
+        "hierarchical_precision": 0.830655,
+        "hierarchical_recall": 0.841431,
+        "hierarchical_f1": 0.830394
+      },
+      {
+        "fold": 4,
+        "accuracy": 0.878299,
+        "top_accuracy": 0.941349,
+        "macro_accuracy": 0.793732,
+        "macro_top_accuracy": 0.885433,
+        "hierarchical_accuracy": 0.839583,
+        "hierarchical_precision": 0.835265,
+        "hierarchical_recall": 0.82812,
+        "hierarchical_f1": 0.829186
+      }
+    ]
+  },
+  "vs_baseline_h_acc": "+4.57%",
+  "vs_exp001_h_acc": "+0.60%",
+  "paper_reference": "Anastasopoulou et al., DCASE 2025 - hierarchical supervision structures latent space; Khosla 2020 SupCon",
+  "timestamp": "2026-04-27 17:48"
+}

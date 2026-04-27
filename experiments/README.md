@@ -141,14 +141,32 @@ python train_test.py \
 
 ---
 
-## 결과 요약 (자동 갱신)
+## 결과 요약
 
-| ID | 설명 | H-Acc | Macro 2nd | Top | vs 베이스 |
-|----|------|-------|-----------|-----|-----------|
-| 000 | baseline (reference) | **79.45%** | 74.02% | 88.88% | 0.00% |
-| 001 | + conf>=4 | _running_ | _ | _ | _ |
-| 005 | + hier loss | _pending_ | _ | _ | _ |
-| 006 | + hidden 256 | _pending_ | _ | _ | _ |
-| 007 | + hidden 512 | _pending_ | _ | _ | _ |
-| 008 | + class weights (best) | _pending_ | _ | _ | _ |
-| 009 | 5-fold ensemble (best) | _pending_ | _ | _ | _ |
+| ID | 설명 | H-Acc | std | Macro 2nd | Top | vs 베이스 |
+|----|------|-------|-----|-----------|-----|-----------|
+| 000 | baseline | 79.45% | — | 74.02% | 88.88% | 0.00% |
+| 001 | + conf≥4 | 83.42% | ±1.33 | 78.52% | 93.62% | +3.97% |
+| 005 | + hier loss | 84.02% | ±1.21 | 79.28% | 93.62% | +4.57% |
+| 006 | + hidden 256 | 84.43% | ±0.29 | 79.76% | 93.64% | +4.98% |
+| 007 | + hidden 512 | 84.17% | ±1.23 | 79.61% | 93.70% | +4.72% (regression) |
+| **008** | **+ class_weights=balanced (BEST)** | **85.29%** | **±0.63** | **81.16%** | 93.62% | **+5.84%** |
+| 009 | EXP-008 + TTA (noise=1e-3, n=5) | 85.29% | ±0.66 | 81.15% | 93.62% | +5.84% (no gain) |
+
+## 핵심 인사이트
+
+1. **confidence ≥ 4 필터링이 가장 큰 단일 기여 (+3.97%)** — 라벨 노이즈 제거가 효과적.
+2. **hidden_size 256 sweet spot** — 128(under) ↔ 256(best) ↔ 512(overfit). std는 ±1.21 → ±0.29 4배 안정.
+3. **계층 손실(+0.60%) + 클래스 가중치(+0.86%) 시너지** — 두 가지 모두 규모는 작지만 macro 2nd-level 메트릭에 직접적 기여.
+4. **TTA는 효과 없음** — 임베딩이 이미 L2 정규화되어 있고 모델이 충분히 robust.
+5. **데이터 전처리 불필요** — CLAP 임베딩이 이미 L2-norm=1.0, mean≈0, std≈0.0442 정규화 상태.
+
+## 다음 단계 (Phase 4-5 미실행 항목)
+
+향후 추가 가능한 실험 (Phase 4-5에서 효과 클 가능성):
+- **EXP-010+**: Optuna로 λ_top, λ_contr, τ 탐색 (현재는 논문 권장값 그대로)
+- **EXP-011**: focal loss (γ=2.0) — 클래스 가중치보다 더 강한 hard-example mining
+- **EXP-012**: mixup at embedding level (α=0.2) — train 다양성 확장
+- **EXP-013**: 다른 seed로 EXP-008 재학습 → ensemble (현재는 1821 단일)
+- **EXP-014**: BSD35k-CS curriculum learning
+- **EXP-015**: CLAP 마지막 2-4레이어 fine-tuning (도메인 적응)
