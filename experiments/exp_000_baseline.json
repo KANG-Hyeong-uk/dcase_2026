@@ -1,0 +1,52 @@
+{
+  "exp_id": "exp_000",
+  "branch": "main",
+  "description": "Baseline reproduction (both mode, 5-fold StratifiedKFold)",
+  "config": {
+    "confidence_threshold": null,
+    "seed": 42,
+    "hidden_size": 128,
+    "dropout": 0.1,
+    "use_batch_norm": true,
+    "mode": "both",
+    "epochs": 100,
+    "batch_size": 64,
+    "lr": 0.001,
+    "scheduler_type": "step",
+    "patience": 5,
+    "early_stopping_factor": 3,
+    "loss": "CrossEntropy(label_smoothing=0.01)",
+    "hier_loss": false
+  },
+  "results": {
+    "fold_avg": {
+      "accuracy": 0.7963,
+      "top_accuracy": 0.8888,
+      "macro_acc_2nd": 0.7402,
+      "macro_acc_top": 0.8489,
+      "hierarchical_acc": 0.7945,
+      "hierarchical_precision": 0.7915,
+      "hierarchical_recall": 0.7810,
+      "hierarchical_f1": 0.7833
+    },
+    "fold_avg_std": {
+      "accuracy": 0.0039,
+      "top_accuracy": 0.0015,
+      "macro_acc_2nd": 0.0105,
+      "hierarchical_acc": 0.0067,
+      "hierarchical_f1": 0.0041
+    },
+    "fold_details": [
+      {"fold": 0, "accuracy": 0.7901, "top_accuracy": 0.8910, "macro_acc_2nd": 0.7249, "macro_acc_top": 0.8500, "hierarchical_acc": 0.7874, "hierarchical_f1": 0.7795},
+      {"fold": 1, "accuracy": 0.7992, "top_accuracy": 0.8882, "macro_acc_2nd": 0.7559, "macro_acc_top": 0.8522, "hierarchical_acc": 0.8040, "hierarchical_f1": 0.7877},
+      {"fold": 2, "accuracy": 0.7987, "top_accuracy": 0.8895, "macro_acc_2nd": 0.7402, "macro_acc_top": 0.8479, "hierarchical_acc": 0.7940, "hierarchical_f1": 0.7872},
+      {"fold": 3, "accuracy": 0.8001, "top_accuracy": 0.8864, "macro_acc_2nd": 0.7341, "macro_acc_top": 0.8406, "hierarchical_acc": 0.7873, "hierarchical_f1": 0.7776},
+      {"fold": 4, "accuracy": 0.7932, "top_accuracy": 0.8891, "macro_acc_2nd": 0.7460, "macro_acc_top": 0.8539, "hierarchical_acc": 0.8000, "hierarchical_f1": 0.7847}
+    ]
+  },
+  "vs_baseline_h_acc": "0.0% (reference)",
+  "audio_only_h_acc": 0.7720,
+  "notes": "5-fold StratifiedKFold, train/val 80/20 split inside each fold. Baseline 코드 그대로 실행. audio-only mode H-Acc=77.20% (참고).",
+  "timestamp": "2026-04-27 00:00",
+  "git_commit": "TBD"
+}

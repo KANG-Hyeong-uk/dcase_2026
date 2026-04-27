@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Model artifacts (too large to track)
+*.pth
+*.ckpt
+*.pt
+*.npy
+*.npz
+
+# Datasets / features
+data/features/
+data/metadata/*.csv
+
+# Build artifacts in baseline subfolder
+dcase2026_task1_baseline/data/
+dcase2026_task1_baseline/model_output/
+dcase2026_task1_baseline/*.png
+
+# Backups
+model_output_backup/
+*_backup/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+logs/
