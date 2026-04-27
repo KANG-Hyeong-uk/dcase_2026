@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rm -rf model_output/smoke_test)",
+      "Bash(mkdir -p ../logs)",
+      "Bash(\"../.venv/Scripts/python.exe\" -u train_test.py --exp_name exp_001_conf4 --modes both --conf_threshold 4 --epochs 100 --k_folds 5 --hidden_size 128 --dropout 0.1 --batch_size 64 --lr 0.001)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(./.venv/Scripts/python.exe -c ' *)"
+    ]
+  }
+}
