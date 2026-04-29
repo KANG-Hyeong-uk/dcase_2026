@@ -446,8 +446,65 @@ python train_test.py \
   --fold_strategy stratified_group
 ```
 
+### EXP-010 결과 (2026-04-29 실행 완료) — **새 baseline**
+
+5-fold cross-validation 결과:
+
+| 지표 | 값 (avg ± std) | EXP-008 inflated 대비 |
+|---|---|---|
+| **Hierarchical Accuracy** | **74.01% ± 2.32%** | **−11.28%** |
+| Top-level Accuracy | 85.22% ± 2.53% | −8.40% |
+| Macro 2nd Accuracy | 66.99% ± 2.69% | −14.17% |
+| Macro Top Accuracy | 81.02% ± 2.01% | — |
+| Hierarchical F1 | 71.62% ± 2.11% | −12.08% |
+| Hierarchical Precision | 72.57% ± 1.63% | — |
+| Hierarchical Recall | 72.25% ± 2.41% | — |
+
+#### Fold별 상세
+
+| Fold | Train (filtered) | Val | Test | H-Acc | Top Acc | Macro 2nd | H-F1 |
+|------|------------------|-----|------|-------|---------|-----------|-------|
+| 0 | 8,551 → ~4,900 | ~1,200 | 2,405 | 76.97% | 86.44% | 70.77% | 73.68% |
+| 1 | 8,713 → ~5,000 | ~1,200 | 2,243 | 70.03% | 80.43% | 62.71% | 67.78% |
+| 2 | 8,851 → ~5,100 | ~1,200 | 2,105 | 74.35% | 87.41% | 66.71% | 71.89% |
+| 3 | 8,881 → ~5,100 | ~1,200 | 2,075 | 73.34% | 84.96% | 66.11% | 71.36% |
+| 4 | 8,828 → ~4,900 | ~1,100 | 2,128 | 75.35% | 86.84% | 68.66% | 73.40% |
+| **avg** | | | | **74.01%** | **85.22%** | **66.99%** | **71.62%** |
+
+#### 핵심 관찰
+
+**1. 두 fix 합산 효과: H-Acc −11.28%**
+- EXP-008 (random KFold + 전체 conf filter, 85.29%) → EXP-010 (StratifiedGroupKFold + train-only filter, 74.01%)
+- 약 80% 정도의 가중치가 진짜 일반화 성능, 나머지 20%가 inflation
+- **이전 모든 실험(EXP-001~009)의 절대 수치 폐기**
+
+**2. fold 분산이 4배 증가 (±0.63 → ±2.32)**
+- EXP-008 inflated의 ±0.63은 *깨끗한 test set + uploader 누설로 외운 패턴*에서 비롯한 인위적 안정성
+- EXP-010 ±2.32가 진짜 모델 성능의 분산
+- Fold 1만 70.03%로 떨어진 것 주목 — 해당 fold의 uploader 분포가 학습 데이터와 가장 다른 분포일 가능성. 추후 분석 대상.
+
+**3. Macro 2nd 더 큰 충격 (−14.17%)**
+- Top accuracy(−8.40%)보다 fine-class(2nd-level)에서 훨씬 큰 하락
+- 클래스 불균형 + uploader leakage 효과가 fine-class에서 증폭됨
+- → EXP-019 (uploader 분석/블랙리스트), EXP-022 (dual-head + parent-aware smoothing)의 시급성 확인
+
+**4. Top accuracy −8.40%**
+- 5-class 분류는 비교적 견고
+- 부풀려진 부분이 주로 "외운 fine-class 라벨"에서 왔음을 시사
+
+#### 실행 환경
+
+- branch: main, commit `5b0c0e4`
+- timestamp: 2026-04-29
+- exp_name: `exp_010_groupkfold` (model_output 디렉토리명)
+- 결과 파일: `experiments/exp_010_true_baseline.json`
+
 ### 후속 액션
 
-1. EXP-010 5-fold 학습 실행 → 새 baseline H-Acc 확정
-2. 모든 후속 실험(EXP-019, EXP-021, EXP-022, ...)은 동일한 두 fix 반영
-3. 향후 점수 비교 시 EXP-010 baseline 기준으로 작성
+1. ✅ EXP-010 5-fold 학습 실행 → 새 baseline H-Acc **74.01% ± 2.32%** 확정
+2. 모든 후속 실험은 이 baseline과 비교
+3. **다음 우선순위 실험 (높은 ROI 순)**:
+   - **EXP-019**: uploader 단위 분석 — fold 1에서 H-Acc 하락 원인 추정 + 저품질 uploader 블랙리스트
+   - **EXP-022**: dual-head + conditional decoding + parent-aware smoothing — Macro 2nd 회복 직격탄
+   - **Macro hF threshold tuning**: post-processing, 무료 +0.5~1.5% 가능
+   - **GCE/SCE loss**: 노이즈 라벨 robust loss로 EXP-008 baseline 대체

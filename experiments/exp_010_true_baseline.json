@@ -1,0 +1,121 @@
+{
+  "exp_id": "exp_010",
+  "branch": "main",
+  "description": "TRUE baseline: train-only conf filter + StratifiedGroupKFold by uploader",
+  "methodology_fixes": [
+    "conf filter applied to TRAIN ONLY (not val/test)",
+    "StratifiedGroupKFold by uploader (uploader leakage 차단)"
+  ],
+  "config": {
+    "exp_name": "exp_010_groupkfold",
+    "modes": [
+      "both"
+    ],
+    "conf_threshold": 4,
+    "hidden_size": 256,
+    "dropout": 0.1,
+    "epochs": 100,
+    "batch_size": 64,
+    "lr": 0.001,
+    "k_folds": 5,
+    "scheduler": "step",
+    "patience": 5,
+    "early_stopping_factor": 3,
+    "seed": 1821,
+    "hier_loss": true,
+    "lambda_top": 0.3,
+    "lambda_contr": 0.1,
+    "tau": 0.07,
+    "class_weights": "balanced",
+    "fold_strategy": "stratified_group",
+    "smoke_test": false
+  },
+  "results": {
+    "fold_avg": {
+      "accuracy": 0.7324389991285163,
+      "top_accuracy": 0.8521795834244418,
+      "macro_acc_2nd": 0.6699402874833552,
+      "macro_acc_top": 0.810197311202929,
+      "hierarchical_acc": 0.740068799343142,
+      "hierarchical_precision": 0.7257260523368378,
+      "hierarchical_recall": 0.7225366713781953,
+      "hierarchical_f1": 0.7162096365490644
+    },
+    "fold_std": {
+      "accuracy": 0.02504738743856063,
+      "top_accuracy": 0.025282662011128023,
+      "macro_accuracy": 0.026931947095179532,
+      "macro_top_accuracy": 0.020140907081663887,
+      "hierarchical_accuracy": 0.023224303941907026,
+      "hierarchical_precision": 0.0163494124968159,
+      "hierarchical_recall": 0.024103117838423276,
+      "hierarchical_f1": 0.021103854672282152
+    },
+    "fold_details": [
+      {
+        "mode": "both",
+        "fold": 0,
+        "accuracy": 75.46777546777547,
+        "top_accuracy": 86.44490644490645,
+        "macro_accuracy": 70.77192827205465,
+        "macro_top_accuracy": 83.1613168935959,
+        "hierarchical_accuracy": 76.96662258282527,
+        "hierarchical_precision": 74.33118304502646,
+        "hierarchical_recall": 75.41794900513261,
+        "hierarchical_f1": 73.67532509130325
+      },
+      {
+        "mode": "both",
+        "fold": 1,
+        "accuracy": 68.8363798484173,
+        "top_accuracy": 80.4279982166741,
+        "macro_accuracy": 62.71064066781965,
+        "macro_top_accuracy": 77.34676154169244,
+        "hierarchical_accuracy": 70.02870110475604,
+        "hierarchical_precision": 69.8694183272355,
+        "hierarchical_recall": 68.19918599552194,
+        "hierarchical_f1": 67.7799382595189
+      },
+      {
+        "mode": "both",
+        "fold": 2,
+        "accuracy": 73.77672209026129,
+        "top_accuracy": 87.41092636579573,
+        "macro_accuracy": 66.70803397043211,
+        "macro_top_accuracy": 81.9915745488278,
+        "hierarchical_accuracy": 74.34980425962996,
+        "hierarchical_precision": 72.27837443088659,
+        "hierarchical_recall": 72.43936168733049,
+        "hierarchical_f1": 71.89451306169033
+      },
+      {
+        "mode": "both",
+        "fold": 3,
+        "accuracy": 72.43373493975903,
+        "top_accuracy": 84.96385542168674,
+        "macro_accuracy": 66.11471463068779,
+        "macro_top_accuracy": 80.55630234888199,
+        "hierarchical_accuracy": 73.33550848978487,
+        "hierarchical_precision": 72.16454886461636,
+        "hierarchical_recall": 71.5303100250106,
+        "hierarchical_f1": 71.35890176761465
+      },
+      {
+        "mode": "both",
+        "fold": 4,
+        "accuracy": 75.70488721804512,
+        "top_accuracy": 86.84210526315789,
+        "macro_accuracy": 68.66482620068341,
+        "macro_top_accuracy": 82.0427002684664,
+        "hierarchical_accuracy": 75.35376323457491,
+        "hierarchical_precision": 74.21950150065403,
+        "hierarchical_recall": 73.68152897610203,
+        "hierarchical_f1": 73.3961400944051
+      }
+    ]
+  },
+  "vs_exp008_inflated_h_acc": "-11.28%",
+  "note": "EXP-001~009 점수는 모두 inflated. 본 실험이 새 baseline.",
+  "timestamp": "2026-04-29 13:31",
+  "git_commit": "5b0c0e4"
+}
