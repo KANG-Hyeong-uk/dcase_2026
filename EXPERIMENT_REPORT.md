@@ -1,6 +1,33 @@
 # DCASE 2026 Task 1 실험 보고서
 
-**베이스라인 79.45% → 베스트 85.29% (+5.84% H-Acc), 7개 누적 개선 실험**
+> ## ⚠️ CRITICAL — 방법론 결함 발견 및 수정 (2026-04-29)
+>
+> **본 문서의 EXP-001 ~ EXP-009 점수는 모두 inflated이며, 비교 기준에서 폐기되었습니다.**
+>
+> ### 발견된 결함 2건
+>
+> 1. **Confidence filter scope 오류**: `--conf_threshold` 필터가 fold split *전*에 전체 데이터에 적용 → val/test도 conf≥4 깨끗한 샘플만 평가 → 실제 운영 분포 미반영. 정상 흐름은 train만 필터하고 val/test는 모든 샘플 유지여야 함.
+> 2. **Uploader leakage**: random `StratifiedKFold` 사용 시 같은 uploader의 비슷한 녹음이 train/test 양쪽에 포함 → 1,806 uploader 중 77.6%가 단일 클래스만 업로드해 leakage 영향 큼.
+>
+> ### 수정 내역
+>
+> - `train_test.py`:
+>   - conf 필터 로직을 fold loop 안으로 이동 (train만 적용)
+>   - `--fold_strategy {random, group, stratified_group}` 옵션 추가, `stratified_group`이 권장 기본값
+> - 새 baseline: **EXP-010** (두 fix 모두 반영, `experiments/exp_010_true_baseline.json` 저장)
+> - 후속 실험은 모두 EXP-010 기준으로 비교
+>
+> ### 영향
+>
+> - 아래 EXP-001 (83.42%), EXP-005 (84.02%), EXP-006 (84.43%), EXP-007 (84.17%), **EXP-008 (85.29%)**, EXP-009 (85.29%) 점수는 모두 inflated.
+> - **개선 방향성** (어떤 변경이 H-Acc를 올리는지)은 여전히 유효하지만, **절대 수치**는 새 baseline에서 재측정 필요.
+> - 이 문서는 historical record로 남기되, 모든 비교는 EXP-010 새 baseline부터 다시 시작합니다.
+>
+> 상세 진단 및 수정 코드: 본 문서 끝 [Methodology Fix Log](#methodology-fix-log) 참조.
+
+---
+
+**[Historical] 베이스라인 79.45% → 베스트 85.29% (inflated, +5.84% H-Acc)**
 
 ---
 
@@ -344,4 +371,83 @@ class_weights로 불균형에 대응했지만, Focal Loss는 hard example에 추
 
 ---
 
-*작성일: 2026-04-27 | 현재 베스트: EXP-008, H-Acc 85.29%*
+*작성일: 2026-04-27 | 현재 베스트: EXP-008, H-Acc 85.29% (⚠️ inflated — 본 문서 최상단 critical notice 참조)*
+
+---
+
+## Methodology Fix Log
+
+### 2026-04-29 — Fix #1: confidence filter scope (train-only)
+
+**Before (잘못됨):**
+```python
+# fold split 이전에 전체 필터
+if args.conf_threshold is not None:
+    full_df = full_df[full_df['index'].isin(high_conf['sound_id'])].reset_index(drop=True)
+    # 10,956 -> 6,821
+# 이후 5-fold split: train/val/test 모두 conf>=4 깨끗한 샘플만
+```
+
+**After (수정됨):**
+```python
+# 1) high_conf_ids set만 미리 로드 (full_df는 그대로 10,956 유지)
+high_conf_ids = None
+if args.conf_threshold is not None:
+    high_conf_ids = set(conf_df.loc[conf_df['confidence'] >= args.conf_threshold, 'sound_id'])
+
+# 2) fold split (전체 10,956 기준)
+# 3) fold loop 안에서 train만 필터
+if high_conf_ids is not None:
+    train_df = train_df[train_df['index'].astype(str).isin(high_conf_ids)].reset_index(drop=True)
+    # val_df, test_df는 손대지 않음
+```
+
+**Smoke test 검증:**
+```
+[conf-filter PREP] threshold>=4 | 6821 high-conf sound_ids loaded (6821/10956 samples).
+                   Will be applied to TRAIN ONLY in fold loop.
+[Fold 0] Train: 6476 -> 3925 (conf>=4 필터, train만)
+           Val:   2075 (필터 없음, 모두 유지)
+           Test:  2405 (필터 없음, 모두 유지)
+```
+
+**영향:** test set이 ~1.6배 커지고 conf<4 노이즈가 포함되어 H-Acc는 EXP-008(85.29%)보다 상당히 낮게 측정될 것. 이게 진짜 일반화 성능이며 private LB의 합리적 proxy.
+
+### 2026-04-29 — Fix #2: StratifiedGroupKFold by uploader
+
+**진단:** conf>=4 필터 후 1,806 unique uploaders 중 77.6%가 단일 클래스만 업로드. random KFold 사용 시 같은 uploader가 train/test 양쪽에 들어가 평가 inflated.
+
+**Code:**
+```python
+# 새 옵션
+--fold_strategy {random, group, stratified_group}
+
+# stratified_group 선택 시
+meta_df = pd.read_csv(dataset_path)
+full_df = full_df.merge(meta_df[['sound_id', 'uploader']], left_on='index', right_on='sound_id', how='left')
+groups = full_df['uploader'].values
+sgkf = StratifiedGroupKFold(n_splits=5, shuffle=True, random_state=seed)
+all_splits = list(sgkf.split(np.zeros(len(labels)), labels, groups=groups))
+# inner train/val split도 GroupShuffleSplit으로 group-aware 처리
+```
+
+**검증:** 5 fold 모두 uploader overlap=0, 23 클래스 모두 보존.
+
+### EXP-010 (새 baseline) 명령어
+
+```bash
+python train_test.py \
+  --exp_name exp_010_true_baseline \
+  --modes both --conf_threshold 4 \
+  --hier_loss --lambda_top 0.3 --lambda_contr 0.1 --tau 0.07 \
+  --hidden_size 256 --dropout 0.1 \
+  --epochs 100 --batch_size 64 --lr 0.001 \
+  --k_folds 5 --class_weights balanced \
+  --fold_strategy stratified_group
+```
+
+### 후속 액션
+
+1. EXP-010 5-fold 학습 실행 → 새 baseline H-Acc 확정
+2. 모든 후속 실험(EXP-019, EXP-021, EXP-022, ...)은 동일한 두 fix 반영
+3. 향후 점수 비교 시 EXP-010 baseline 기준으로 작성

@@ -259,14 +259,17 @@ def main():
 
     full_df = pd.read_csv(prepared_dataset_path)
 
+    high_conf_ids = None
     if args.conf_threshold is not None:
         conf_df = pd.read_csv(dataset_path)
         conf_df['sound_id'] = conf_df['sound_id'].astype(str).str.strip()
-        high_conf = conf_df[conf_df['confidence'] >= args.conf_threshold]
+        high_conf_ids = set(conf_df.loc[conf_df['confidence'] >= args.conf_threshold, 'sound_id'])
         full_df['index'] = full_df['index'].astype(str)
-        before = len(full_df)
-        full_df = full_df[full_df['index'].isin(high_conf['sound_id'])].reset_index(drop=True)
-        print(f"[conf-filter] {before} -> {len(full_df)} samples (kept conf>={args.conf_threshold})")
+        n_full_high_conf = int(full_df['index'].isin(high_conf_ids).sum())
+        print(f"[conf-filter PREP] threshold>={args.conf_threshold} | "
+              f"{len(high_conf_ids)} high-conf sound_ids loaded "
+              f"({n_full_high_conf}/{len(full_df)} samples in dataset). "
+              f"Will be applied to TRAIN ONLY in fold loop; val/test keep all samples.")
 
     if args.fold_strategy in ('group', 'stratified_group'):
         meta_df = pd.read_csv(dataset_path)
@@ -346,7 +349,17 @@ def main():
                 train_df = database.iloc[train_idx].reset_index(drop=True)
                 val_df = database.iloc[val_idx].reset_index(drop=True)
                 test_df = database.iloc[test_idx].reset_index(drop=True)
-                print(f"Train size: {len(train_df)}, Val size: {len(val_df)}, Test size: {len(test_df)}")
+
+                if high_conf_ids is not None:
+                    tr_before = len(train_df)
+                    train_df = train_df[train_df['index'].astype(str).isin(high_conf_ids)].reset_index(drop=True)
+                    print(f"[Fold {fold}] Train: {tr_before} -> {len(train_df)} (conf>={args.conf_threshold} 필터, train만)")
+                    print(f"           Val:   {len(val_df)} (필터 없음, 모두 유지)")
+                    print(f"           Test:  {len(test_df)} (필터 없음, 모두 유지)")
+                    if len(train_df) == 0:
+                        raise RuntimeError(f"Fold {fold} train set empty after conf filter — threshold too strict")
+                else:
+                    print(f"[Fold {fold}] Train: {len(train_df)}, Val: {len(val_df)}, Test: {len(test_df)} (no conf filter)")
 
                 train_dataset = HATRDataset(train_df, aug=True, mask_pct=0.7)
                 val_dataset = HATRDataset(val_df, aug=False)
