@@ -1,0 +1,21 @@
+{
+  "rows": 31464,
+  "mean_label_quality_score": 0.5781503098805872,
+  "mean_label_noise_score": 0.42184969011941276,
+  "quality_group_counts": {
+    "clean_high_quality": 13080,
+    "middle_uncertain": 10871,
+    "pseudo_label_candidate": 4496,
+    "ambiguous_same_top": 1754,
+    "noisy_top_mismatch": 1263
+  },
+  "score_formula": {
+    "provided_class_probability": 0.45,
+    "same_class": 0.2,
+    "same_top_class": 0.12,
+    "classifier_margin": 0.12,
+    "low_ensemble_disagreement": 0.08,
+    "annotation_score_auxiliary": 0.03
+  },
+  "note": "This is a label quality/noise score for BSD35k provided labels, not a direct BSD10k confidence prediction."
+}

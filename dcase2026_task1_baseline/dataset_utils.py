@@ -33,11 +33,11 @@ class HATRDataset(Dataset):
     
     def __getitem__(self, idx):
         sample = self.dataframe.iloc[idx]
-        sound_id = sample['index']
-        class_name = sample['class']
-        top_class_name = sample['top_class']
-        class_idx = sample['class_idx']
-        top_class_idx = sample['top_class_idx']
+        sound_id = str(sample['index'])
+        class_name = str(sample['class'])
+        top_class_name = str(sample['top_class'])
+        class_idx = int(sample['class_idx'])
+        top_class_idx = int(sample['top_class_idx'])
         
         emb_path = sample['audio_emb_filepath']
         emb = torch.tensor(np.load(emb_path), dtype=torch.float32)

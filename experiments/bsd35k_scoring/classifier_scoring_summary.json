@@ -1,0 +1,15 @@
+{
+  "model_dir": "C:\\Users\\solok\\Desktop\\Dcase baseline\\dcase2026_task1_baseline\\model_output\\both",
+  "checkpoints": [
+    "C:\\Users\\solok\\Desktop\\Dcase baseline\\dcase2026_task1_baseline\\model_output\\both\\fold_0\\best_model.pth",
+    "C:\\Users\\solok\\Desktop\\Dcase baseline\\dcase2026_task1_baseline\\model_output\\both\\fold_1\\best_model.pth",
+    "C:\\Users\\solok\\Desktop\\Dcase baseline\\dcase2026_task1_baseline\\model_output\\both\\fold_2\\best_model.pth",
+    "C:\\Users\\solok\\Desktop\\Dcase baseline\\dcase2026_task1_baseline\\model_output\\both\\fold_3\\best_model.pth",
+    "C:\\Users\\solok\\Desktop\\Dcase baseline\\dcase2026_task1_baseline\\model_output\\both\\fold_4\\best_model.pth"
+  ],
+  "rows_scored": 31464,
+  "same_class_rate": 0.5701754385964912,
+  "same_top_class_rate": 0.7513984235952199,
+  "mean_classifier_confidence": 0.764144241809845,
+  "mean_provided_class_probability": 0.5059100985527039
+}
