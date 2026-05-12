@@ -1,0 +1,80 @@
+{
+  "exp_id": "exp_001",
+  "branch": "exp/confidence-filter",
+  "description": "BSD10k confidence>=4 훈련 필터링 (both mode, 5-fold)",
+  "config": {
+    "confidence_threshold": 4,
+    "seed": 1821,
+    "hidden_size": 128,
+    "mode": "both",
+    "epochs": 100,
+    "batch_size": 64,
+    "lr": 0.001,
+    "dropout": 0.1,
+    "scheduler": "step"
+  },
+  "results": {
+    "fold_avg": {
+      "macro_acc_2nd": 72.3079,
+      "macro_acc_top": 88.2439,
+      "hierarchical_acc": 78.4493,
+      "hierarchical_f1": 76.9714
+    },
+    "fold_details": [
+      {
+        "fold": 0,
+        "train_size": 4425,
+        "test_size": 2192,
+        "accuracy": 77.6916,
+        "top_accuracy": 88.3668,
+        "macro_acc": 71.112,
+        "h_acc": 77.8159,
+        "h_f1": 76.6768
+      },
+      {
+        "fold": 1,
+        "train_size": 4329,
+        "test_size": 2191,
+        "accuracy": 78.8681,
+        "top_accuracy": 88.6353,
+        "macro_acc": 72.6417,
+        "h_acc": 78.852,
+        "h_f1": 76.9953
+      },
+      {
+        "fold": 2,
+        "train_size": 4372,
+        "test_size": 2191,
+        "accuracy": 79.4158,
+        "top_accuracy": 89.2287,
+        "macro_acc": 73.5624,
+        "h_acc": 79.5606,
+        "h_f1": 78.3124
+      },
+      {
+        "fold": 3,
+        "train_size": 4358,
+        "test_size": 2191,
+        "accuracy": 78.3204,
+        "top_accuracy": 88.0876,
+        "macro_acc": 72.1725,
+        "h_acc": 78.6523,
+        "h_f1": 76.9431
+      },
+      {
+        "fold": 4,
+        "train_size": 4351,
+        "test_size": 2191,
+        "accuracy": 78.0466,
+        "top_accuracy": 86.901,
+        "macro_acc": 72.0511,
+        "h_acc": 77.3658,
+        "h_f1": 75.9292
+      }
+    ]
+  },
+  "vs_baseline_h_acc": "-1.00%",
+  "baseline_h_acc": 79.45,
+  "timestamp": "2026-05-11 20:30",
+  "git_commit": "690d6e6"
+}

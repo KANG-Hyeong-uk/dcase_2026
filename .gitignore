@@ -5,8 +5,17 @@ __pycache__/
 *.so
 .Python
 .venv/
+.venv*/
 venv/
 env/
+ENV/
+env.bak/
+venv.bak/
+pip-wheel-metadata/
+*.egg-info/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
 
 # Jupyter
 .ipynb_checkpoints/
@@ -18,6 +27,9 @@ env/
 *.pt
 *.npy
 *.npz
+*.onnx
+*.pkl
+*.joblib
 
 # Datasets / features
 data/features/
@@ -30,6 +42,9 @@ dcase2026_task1_baseline/*.png
 
 # Backups
 model_output_backup/
+model_output*/
+outputs/
+experiments/**/checkpoints/
 *_backup/
 
 # OS
@@ -40,6 +55,7 @@ desktop.ini
 # IDE
 .vscode/
 .idea/
+.claude/
 *.swp
 
 # Logs

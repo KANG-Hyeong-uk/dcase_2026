@@ -291,8 +291,12 @@ C:\Users\solok\Desktop\Dcase baseline\       ← 최상위 루트 (PROJECT_DIR)
 ├── data\                                    ← 데이터셋 루트 (DATA_ROOT)
 │   ├── metadata\
 │   │   ├── BSD10k_metadata.csv
+│   │   ├── BSD35k_BST_description.csv
+│   │   ├── BSD35k-CS_metadata.csv
 │   │   └── BST_description.csv
 │   └── features\
+│       ├── BSD35k_clap_audio_embeddings\    ← {sound_id}.npy (512d)
+│       ├── BSD35k-CS_clap_text_embeddings\  ← {sound_id}.npy (512d)
 │       ├── clap_audio_embeddings\           ← {sound_id}.npy (512d)
 │       └── clap_text_embeddings\            ← {sound_id}.npy (512d)
 └── dcase2026_task1_baseline\                ← 베이스라인 코드 루트 (CODE_DIR)
