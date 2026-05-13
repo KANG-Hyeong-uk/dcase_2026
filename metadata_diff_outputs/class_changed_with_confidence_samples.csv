@@ -1,0 +1,59 @@
+﻿sound_id,class_transition,confidence_transition,confidence_delta,confidence_change_direction,class_old,class_new,class_top_old,class_top_new,class_idx_old,class_idx_new,confidence_old,confidence_new,title
+50189,fx-a -> fx-h,2 -> 4,2,up,fx-a,fx-h,fx,fx,15,404,2,4,033_humming_whistle.wav
+17486,fx-a -> ss-u,3 -> 3,0,same,fx-a,ss-u,fx,ss,15,503,3,3,Threatening Dogs.wav
+34180,fx-a -> ss-u,3 -> 3,0,same,fx-a,ss-u,fx,ss,15,503,3,3,birds 1.wav
+156945,fx-a -> ss-u,3 -> 3,0,same,fx-a,ss-u,fx,ss,15,503,3,3,morning in the forest with distant river.wav
+31909,fx-a -> ss-u,4 -> 3,-1,down,fx-a,ss-u,fx,ss,15,503,4,3,wren 1.wav
+3090,fx-el -> m-si,3 -> 3,0,same,fx-el,m-si,fx,m,18,102,3,3,210802D.mp3
+38204,fx-el -> m-si,4 -> 3,-1,down,fx-el,m-si,fx,m,18,102,4,3,ukrud.wav
+39992,fx-ex -> m-si,2 -> 4,2,up,fx-ex,m-si,fx,m,17,102,2,4,_130 BPM arpeggiated loop - C0 - variation 1.flac
+163653,fx-ex -> m-si,3 -> 3,0,same,fx-ex,m-si,fx,m,17,102,3,3,Melody_ (8).wav
+200930,fx-ex -> m-si,4 -> 2,-2,down,fx-ex,m-si,fx,m,17,102,4,2,8bit110bpm-58.wav
+408417,fx-h -> sp-c,2 -> 3,1,up,fx-h,sp-c,fx,sp,14,302,2,3,Soccer Game Start Whistle.wav
+426761,fx-h -> sp-c,2 -> 3,1,up,fx-h,sp-c,fx,sp,14,302,2,3,Académica
+170342,fx-h -> sp-c,3 -> 3,0,same,fx-h,sp-c,fx,sp,14,302,3,3,Bologna ha il cromosoma della gioventù.wav
+74383,fx-m -> fx-v,4 -> 5,1,up,fx-m,fx-v,fx,fx,13,402,4,5,STE-009_motorcycles_passing03.wav
+99243,fx-m -> is-p,3 -> 4,1,up,fx-m,is-p,fx,is,13,201,3,4,ratchet_large02.wav
+35623,fx-n -> fx-o,3 -> 2,-1,down,fx-n,fx-o,fx,fx,16,401,3,2,toilet flush 1 by fresco.wav
+35624,fx-n -> fx-o,3 -> 2,-1,down,fx-n,fx-o,fx,fx,16,401,3,2,toilet flush 2 (long) by fresco.wav
+424726,fx-n -> fx-o,3 -> 2,-1,down,fx-n,fx-o,fx,fx,16,401,3,2,Flushing
+340897,fx-n -> fx-o,3 -> 3,0,same,fx-n,fx-o,fx,fx,16,401,3,3,ToiletFlush(1)_bip.wav
+405431,fx-n -> fx-o,3 -> 4,1,up,fx-n,fx-o,fx,fx,16,401,3,4,open_bottle_gas_3.wav
+152977,fx-n -> fx-o,4 -> 2,-2,down,fx-n,fx-o,fx,fx,16,401,4,2,toilet tap
+49538,fx-n -> fx-o,4 -> 3,-1,down,fx-n,fx-o,fx,fx,16,401,4,3,flush01.wav
+185061,fx-n -> ss-i,2 -> 1,-1,down,fx-n,ss-i,fx,ss,16,502,2,1,Airplane Toilet Flush 1.WAV
+118585,fx-o -> ss-u,4 -> 2,-2,down,fx-o,ss-u,fx,ss,11,503,4,2,tesat fan_170411.wav
+90423,fx-v -> sp-p,3 -> 2,-1,down,fx-v,sp-p,fx,sp,12,303,3,2,train repair setting switches.wav
+125561,fx-v -> ss-i,3 -> 4,1,up,fx-v,ss-i,fx,ss,12,502,3,4,insidethebus.wav
+91557,fx-v -> ss-u,4 -> 3,-1,down,fx-v,ss-u,fx,ss,12,503,4,3,rocky_mtns_train_crossing.wav
+145482,fx-v -> ss-u,4 -> 3,-1,down,fx-v,ss-u,fx,ss,12,503,4,3,0001 Cars_passing_through_front_quite
+28972,is-e -> fx-el,4 -> 2,-2,down,is-e,fx-el,is,fx,7,408,4,2,btn162.wav
+28826,is-e -> fx-el,4 -> 3,-1,down,is-e,fx-el,is,fx,7,408,4,3,btn016.wav
+54417,is-e -> fx-ex,2 -> 3,1,up,is-e,fx-ex,is,fx,7,407,2,3,yamaha40M_p2_02.wav
+28610,is-e -> is-k,4 -> 4,0,same,is-e,is-k,is,is,7,204,4,4,68_gis4.aif
+133165,is-e -> is-s,3 -> 4,1,up,is-e,is-s,is,is,7,202,3,4,gliss.down.high.09.aif
+13402,is-e -> is-w,3 -> 4,1,up,is-e,is-w,is,is,7,203,3,4,001.wav
+105873,is-e -> m-si,2 -> 3,1,up,is-e,m-si,is,m,7,102,2,3,Kick Fx - Marker #404.wav
+246067,is-e -> m-si,2 -> 3,1,up,is-e,m-si,is,m,7,102,2,3,15_ca_dnb layers.wav
+159255,is-e -> m-si,3 -> 3,0,same,is-e,m-si,is,m,7,102,3,3,Yamaha PSS-370 - Sounds Row 3 - 07.wav
+13008,is-e -> m-si,4 -> 4,0,same,is-e,m-si,is,m,7,102,4,4,ClaudiusMaximus_-_GabberKicks_-_061.flac
+10113,is-e -> sp-s,4 -> 3,-1,down,is-e,sp-s,is,sp,7,301,4,3,mb-mbbb-ha-in-out 025.aif
+323725,is-p -> fx-o,4 -> 3,-1,down,is-p,fx-o,is,fx,3,401,4,3,thunk.wav
+11647,is-p -> is-k,5 -> 5,0,same,is-p,is-k,is,is,3,204,5,5,Grandmither's Piano (28).wav
+416308,is-p -> m-si,2 -> 3,1,up,is-p,m-si,is,m,3,102,2,3,Background Ride Hats
+36122,is-p -> m-sp,3 -> 4,1,up,is-p,m-sp,is,m,3,101,3,4,X Shake 1Bar E.aiff
+23859,is-s -> is-k,4 -> 4,0,same,is-s,is-k,is,is,4,204,4,4,Clav007.aif
+50418,m-si -> m-m,3 -> 3,0,same,m-si,m-m,m,m,1,103,3,3,fh4.mp3
+345397,m-si -> m-m,3 -> 3,0,same,m-si,m-m,m,m,1,103,3,3,sydance7_123bpm.wav
+86593,m-sp -> m-m,3 -> 3,0,same,m-sp,m-m,m,m,0,103,3,3,80 bpm Durbanville 23rd Century Attack loop 8.flac
+161252,m-sp -> m-si,2 -> 2,0,same,m-sp,m-si,m,m,0,102,2,2,Small in Size 120bpm.wav
+404053,m-sp -> m-si,3 -> 4,1,up,m-sp,m-si,m,m,0,102,3,4,Dance Bass
+193810,sp-c -> fx-ex,2 -> 2,0,same,sp-c,fx-ex,sp,fx,9,407,2,2,Four_Voices_Whispering_3.wav
+204641,sp-p -> is-p,4 -> 4,0,same,sp-p,is-p,sp,is,10,201,4,4,Low Intesity G3.wav
+147100,sp-s -> sp-p,2 -> 3,1,up,sp-s,sp-p,sp,sp,8,303,2,3,La Colina_Cercanías_Fuengirola_030212.mp3
+58174,sp-s -> sp-p,3 -> 3,0,same,sp-s,sp-p,sp,sp,8,303,3,3,20080728.recording.not.allowed.wav
+177252,sp-s -> sp-p,5 -> 4,-1,down,sp-s,sp-p,sp,sp,8,303,5,4,before-after remix of 177154__plaedo__befriending-vocals (excerpt).wav
+194743,ss-n -> ss-u,3 -> 4,1,up,ss-n,ss-u,ss,ss,19,503,3,4,Crescendo.wav
+76491,ss-u -> sp-s,3 -> 3,0,same,ss-u,sp-s,ss,sp,21,301,3,3,b5_09.wav
+17146,ss-u -> ss-i,3 -> 4,1,up,ss-u,ss-i,ss,ss,21,502,3,4,lg fire4.wav
+33640,ss-u -> ss-n,3 -> 2,-1,down,ss-u,ss-n,ss,ss,21,501,3,2,20070407.lambs.kids.WAV
