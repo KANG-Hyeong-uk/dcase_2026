@@ -1,0 +1,43 @@
+{
+  "feature_description": "audio_embedding_512 + text_embedding_512 + class_one_hot + similarity_margin_4",
+  "audio_embedding_dim": 512,
+  "text_embedding_dim": 512,
+  "class_onehot_dim": 23,
+  "scalar_feature_dim": 4,
+  "scalar_feature_cols": [
+    "audio_text_sim",
+    "audio_class_sim",
+    "audio_assigned_label_margin",
+    "text_assigned_label_margin"
+  ],
+  "total_input_dim": 1051,
+  "output_dir": "c:\\Users\\solok\\Desktop\\Dcase baseline\\deft논문기반_실험\\mlp_embedding_plus_similarity_confidence_outputs",
+  "metrics": [
+    {
+      "task": "confidence_5class_mlp",
+      "accuracy": 0.5936739659,
+      "macro_precision": 0.436603201,
+      "macro_recall": 0.2843364397,
+      "macro_f1": 0.2968858556,
+      "weighted_precision": 0.5683800881,
+      "weighted_recall": 0.5936739659,
+      "weighted_f1": 0.5476239074,
+      "mae": 0.4628953771,
+      "best_epoch": 4,
+      "best_val_loss": 0.9448407201
+    },
+    {
+      "task": "confidence_binary_123_vs_45_mlp",
+      "accuracy": 0.703163017,
+      "macro_precision": 0.6830200501,
+      "macro_recall": 0.6656313004,
+      "macro_f1": 0.6701639905,
+      "weighted_precision": 0.6958152681,
+      "weighted_recall": 0.703163017,
+      "weighted_f1": 0.6958016957,
+      "mae": 0.296836983,
+      "best_epoch": 3,
+      "best_val_loss": 0.5721182502
+    }
+  ]
+}

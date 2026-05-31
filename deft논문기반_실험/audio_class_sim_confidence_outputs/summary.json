@@ -1,0 +1,14 @@
+{
+  "n_rows": 10956,
+  "is_mean_monotonic_increasing": true,
+  "confidence_5_mean_minus_confidence_1_mean": 0.09534915437494876,
+  "confidence_5_mean_minus_confidence_4_mean": 0.055049710594058845,
+  "similarity_5bin_accuracy": 0.21066082511865644,
+  "similarity_5bin_macro_precision": 0.21067876382147271,
+  "similarity_5bin_macro_recall": 0.24599534506414109,
+  "similarity_5bin_macro_f1": 0.16771260966630638,
+  "similarity_5bin_weighted_precision": 0.4078378782509986,
+  "similarity_5bin_weighted_recall": 0.21066082511865644,
+  "similarity_5bin_weighted_f1": 0.2536218858272198,
+  "output_dir": "c:\\Users\\solok\\Desktop\\Dcase baseline\\deft논문기반_실험\\audio_class_sim_confidence_outputs"
+}

@@ -1,0 +1,24 @@
+index,code,top_class,label,prompt,embedding_file
+0,m-sp,Music,solo percussion music,solo percussion music,m-sp.npy
+1,m-si,Music,solo instrument music,solo instrument music,m-si.npy
+2,m-m,Music,multiple instruments music,multiple instruments music,m-m.npy
+3,is-p,Instrument Sounds,percussion instrument sound,percussion instrument sound,is-p.npy
+4,is-s,Instrument Sounds,string instrument sound,string instrument sound,is-s.npy
+5,is-w,Instrument Sounds,wind instrument sound,wind instrument sound,is-w.npy
+6,is-k,Instrument Sounds,piano or keyboard instrument sound,piano or keyboard instrument sound,is-k.npy
+7,is-e,Instrument Sounds,synthesizer or electronic instrument sound,synthesizer or electronic instrument sound,is-e.npy
+8,sp-s,Speech,solo speech,solo speech,sp-s.npy
+9,sp-c,Speech,conversation or crowd speech,conversation or crowd speech,sp-c.npy
+10,sp-p,Speech,processed or synthetic speech,processed or synthetic speech,sp-p.npy
+11,fx-o,Sound Effects / Functional Sounds,household appliance sound,household appliance sound,fx-o.npy
+12,fx-v,Sound Effects / Functional Sounds,vehicle sound,vehicle sound,fx-v.npy
+13,fx-m,Sound Effects / Functional Sounds,machinery or engine sound,machinery or engine sound,fx-m.npy
+14,fx-a,Sound Effects / Functional Sounds,animal sound,animal sound,fx-a.npy
+15,fx-h,Sound Effects / Functional Sounds,human action sound,human action sound,fx-h.npy
+16,fx-n,Sound Effects / Functional Sounds,natural element or explosion sound,natural element or explosion sound,fx-n.npy
+17,fx-ex,Sound Effects / Functional Sounds,experimental sound effect,experimental sound effect,fx-ex.npy
+18,fx-el,Sound Effects / Functional Sounds,electronic or designed sound effect,electronic or designed sound effect,fx-el.npy
+19,ss-n,Soundscape,natural environmental soundscape,natural environmental soundscape,ss-n.npy
+20,ss-i,Soundscape,indoor environmental soundscape,indoor environmental soundscape,ss-i.npy
+21,ss-u,Soundscape,urban environmental soundscape,urban environmental soundscape,ss-u.npy
+22,ss-s,Soundscape,synthetic or artificial soundscape,synthetic or artificial soundscape,ss-s.npy

@@ -1,0 +1,11 @@
+              precision    recall  f1-score   support
+
+confidence_1       0.50      0.05      0.09        21
+confidence_2       0.45      0.16      0.24       150
+confidence_3       0.45      0.50      0.47       656
+confidence_4       0.64      0.70      0.67      1210
+confidence_5       0.48      0.28      0.35       155
+
+    accuracy                           0.57      2192
+   macro avg       0.51      0.34      0.36      2192
+weighted avg       0.56      0.57      0.55      2192

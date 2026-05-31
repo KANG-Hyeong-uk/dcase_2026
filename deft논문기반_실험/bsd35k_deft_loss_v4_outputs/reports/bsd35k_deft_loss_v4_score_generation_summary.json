@@ -1,0 +1,54 @@
+{
+  "bsd10k_alignment": {
+    "raw_rows": 10956,
+    "usable_rows": 10956,
+    "missing_audio": 0,
+    "missing_text": 0
+  },
+  "bsd35k_alignment": {
+    "raw_rows": 33829,
+    "usable_rows": 33829,
+    "missing_audio": 0,
+    "missing_text": 0
+  },
+  "bsd10k_feature_info": {
+    "audio_dim": 512,
+    "text_dim": 512,
+    "class_onehot_dim": 23,
+    "scalar_dim": 4,
+    "input_dim": 1051,
+    "unknown_class_rows": 0
+  },
+  "bsd35k_feature_info": {
+    "audio_dim": 512,
+    "text_dim": 512,
+    "class_onehot_dim": 23,
+    "scalar_dim": 4,
+    "input_dim": 1051,
+    "unknown_class_rows": 2365
+  },
+  "loss_weights": {
+    "1": 5.0,
+    "2": 1.5,
+    "3": 1.0,
+    "4": 1.0,
+    "5": 1.0
+  },
+  "model_description": {
+    "architecture": "Linear(input, 32) -> ReLU -> Dropout(0.2) -> Linear(output)",
+    "loss_weights": {
+      "1": 5.0,
+      "2": 1.5,
+      "3": 1.0,
+      "4": 1.0,
+      "5": 1.0
+    },
+    "final_epochs_5class": 5,
+    "final_epochs_binary": 5,
+    "epoch_source": "median_oof_best_epoch"
+  },
+  "stacker_applied": true,
+  "threshold_rows_applied": 5,
+  "base_score_file": "c:\\Users\\solok\\Desktop\\Dcase baseline\\deft논문기반_실험\\bsd35k_deft_loss_v4_outputs\\predictions\\BSD35k-CS_deft_loss_v4_base_scores.csv",
+  "full_score_file": "c:\\Users\\solok\\Desktop\\Dcase baseline\\deft논문기반_실험\\bsd35k_deft_loss_v4_outputs\\predictions\\BSD35k-CS_deft_loss_v4_scores.csv"
+}

@@ -1,0 +1,5 @@
+﻿criterion,value,pass
+Q5 mean confidence > Q1 mean confidence,0.24987173806580998,True
+Q5 high_conf_rate_4_5 > Q1 high_conf_rate_4_5,0.13534549101000448,True
+Q5 high_conf lift vs overall > 1.0,1.0879163343049303,True
+Spearman correlation > 0,0.12520199161418497,True

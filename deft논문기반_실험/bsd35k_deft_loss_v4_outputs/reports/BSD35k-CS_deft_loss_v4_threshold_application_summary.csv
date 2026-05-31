@@ -1,0 +1,6 @@
+﻿method,objective,score_column,threshold,selection_column,selected_rows,selected_ratio
+OOF ridge stacker,F1-optimal,ridge_stacker_score45,0.386,select_oof_ridge_stacker_f1_optimal,25541,0.7550031038458128
+OOF ridge stacker,macro-F1-optimal,ridge_stacker_score45,0.5690000000000001,select_oof_ridge_stacker_macro_f1_optimal,10612,0.31369535014336813
+rank average: binary + expected + P45,balanced recall 123/45,rank_avg_binary_expected_p45,0.454,select_rank_average_binary_expected_p45_balanced_recall_123_45,18470,0.5459812586833782
+rank average: binary + expected + P45,precision-optimal @ recall>=0.70,rank_avg_binary_expected_p45,0.436,select_rank_average_binary_expected_p45_precision_optimal_recall_0_70,19147,0.5659936740666293
+rank average: binary + expected + P45,recall-optimal @ precision>=0.70,rank_avg_binary_expected_p45,0.225,select_rank_average_binary_expected_p45_recall_optimal_precision_0_70,27162,0.8029205711076296

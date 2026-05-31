@@ -1,0 +1,186 @@
+[
+  {
+    "index": 0,
+    "code": "m-sp",
+    "top_class": "Music",
+    "label": "solo percussion music",
+    "prompt": "solo percussion music",
+    "embedding_file": "m-sp.npy"
+  },
+  {
+    "index": 1,
+    "code": "m-si",
+    "top_class": "Music",
+    "label": "solo instrument music",
+    "prompt": "solo instrument music",
+    "embedding_file": "m-si.npy"
+  },
+  {
+    "index": 2,
+    "code": "m-m",
+    "top_class": "Music",
+    "label": "multiple instruments music",
+    "prompt": "multiple instruments music",
+    "embedding_file": "m-m.npy"
+  },
+  {
+    "index": 3,
+    "code": "is-p",
+    "top_class": "Instrument Sounds",
+    "label": "percussion instrument sound",
+    "prompt": "percussion instrument sound",
+    "embedding_file": "is-p.npy"
+  },
+  {
+    "index": 4,
+    "code": "is-s",
+    "top_class": "Instrument Sounds",
+    "label": "string instrument sound",
+    "prompt": "string instrument sound",
+    "embedding_file": "is-s.npy"
+  },
+  {
+    "index": 5,
+    "code": "is-w",
+    "top_class": "Instrument Sounds",
+    "label": "wind instrument sound",
+    "prompt": "wind instrument sound",
+    "embedding_file": "is-w.npy"
+  },
+  {
+    "index": 6,
+    "code": "is-k",
+    "top_class": "Instrument Sounds",
+    "label": "piano or keyboard instrument sound",
+    "prompt": "piano or keyboard instrument sound",
+    "embedding_file": "is-k.npy"
+  },
+  {
+    "index": 7,
+    "code": "is-e",
+    "top_class": "Instrument Sounds",
+    "label": "synthesizer or electronic instrument sound",
+    "prompt": "synthesizer or electronic instrument sound",
+    "embedding_file": "is-e.npy"
+  },
+  {
+    "index": 8,
+    "code": "sp-s",
+    "top_class": "Speech",
+    "label": "solo speech",
+    "prompt": "solo speech",
+    "embedding_file": "sp-s.npy"
+  },
+  {
+    "index": 9,
+    "code": "sp-c",
+    "top_class": "Speech",
+    "label": "conversation or crowd speech",
+    "prompt": "conversation or crowd speech",
+    "embedding_file": "sp-c.npy"
+  },
+  {
+    "index": 10,
+    "code": "sp-p",
+    "top_class": "Speech",
+    "label": "processed or synthetic speech",
+    "prompt": "processed or synthetic speech",
+    "embedding_file": "sp-p.npy"
+  },
+  {
+    "index": 11,
+    "code": "fx-o",
+    "top_class": "Sound Effects / Functional Sounds",
+    "label": "household appliance sound",
+    "prompt": "household appliance sound",
+    "embedding_file": "fx-o.npy"
+  },
+  {
+    "index": 12,
+    "code": "fx-v",
+    "top_class": "Sound Effects / Functional Sounds",
+    "label": "vehicle sound",
+    "prompt": "vehicle sound",
+    "embedding_file": "fx-v.npy"
+  },
+  {
+    "index": 13,
+    "code": "fx-m",
+    "top_class": "Sound Effects / Functional Sounds",
+    "label": "machinery or engine sound",
+    "prompt": "machinery or engine sound",
+    "embedding_file": "fx-m.npy"
+  },
+  {
+    "index": 14,
+    "code": "fx-a",
+    "top_class": "Sound Effects / Functional Sounds",
+    "label": "animal sound",
+    "prompt": "animal sound",
+    "embedding_file": "fx-a.npy"
+  },
+  {
+    "index": 15,
+    "code": "fx-h",
+    "top_class": "Sound Effects / Functional Sounds",
+    "label": "human action sound",
+    "prompt": "human action sound",
+    "embedding_file": "fx-h.npy"
+  },
+  {
+    "index": 16,
+    "code": "fx-n",
+    "top_class": "Sound Effects / Functional Sounds",
+    "label": "natural element or explosion sound",
+    "prompt": "natural element or explosion sound",
+    "embedding_file": "fx-n.npy"
+  },
+  {
+    "index": 17,
+    "code": "fx-ex",
+    "top_class": "Sound Effects / Functional Sounds",
+    "label": "experimental sound effect",
+    "prompt": "experimental sound effect",
+    "embedding_file": "fx-ex.npy"
+  },
+  {
+    "index": 18,
+    "code": "fx-el",
+    "top_class": "Sound Effects / Functional Sounds",
+    "label": "electronic or designed sound effect",
+    "prompt": "electronic or designed sound effect",
+    "embedding_file": "fx-el.npy"
+  },
+  {
+    "index": 19,
+    "code": "ss-n",
+    "top_class": "Soundscape",
+    "label": "natural environmental soundscape",
+    "prompt": "natural environmental soundscape",
+    "embedding_file": "ss-n.npy"
+  },
+  {
+    "index": 20,
+    "code": "ss-i",
+    "top_class": "Soundscape",
+    "label": "indoor environmental soundscape",
+    "prompt": "indoor environmental soundscape",
+    "embedding_file": "ss-i.npy"
+  },
+  {
+    "index": 21,
+    "code": "ss-u",
+    "top_class": "Soundscape",
+    "label": "urban environmental soundscape",
+    "prompt": "urban environmental soundscape",
+    "embedding_file": "ss-u.npy"
+  },
+  {
+    "index": 22,
+    "code": "ss-s",
+    "top_class": "Soundscape",
+    "label": "synthetic or artificial soundscape",
+    "prompt": "synthetic or artificial soundscape",
+    "embedding_file": "ss-s.npy"
+  }
+]

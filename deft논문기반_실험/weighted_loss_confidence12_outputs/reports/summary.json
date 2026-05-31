@@ -1,0 +1,42 @@
+{
+  "choice": "weighted_loss_confidence_1_2",
+  "reason": "up_sampling_confi4 results favored confidence12 weighted loss over oversampling for this minority-confidence objective",
+  "feature_description": "audio_embedding_512 + text_embedding_512 + class_one_hot + similarity_margin_4",
+  "model_description": "Linear(input_dim, 32) -> ReLU -> Dropout(0.2) -> Linear(32, output_dim)",
+  "loss_weights": {
+    "1": 20.540625,
+    "2": 2.927839643652561,
+    "3": 1.0,
+    "4": 1.0,
+    "5": 1.0
+  },
+  "input_dim": 1051,
+  "metrics": [
+    {
+      "accuracy": 0.5675182482,
+      "macro_precision": 0.4009893803,
+      "macro_recall": 0.3272304368,
+      "macro_f1": 0.3211133405,
+      "weighted_precision": 0.556998888,
+      "weighted_recall": 0.5675182482,
+      "weighted_f1": 0.5331853164,
+      "mae": 0.5182481752,
+      "task": "confidence_5class_weighted12_mlp",
+      "best_epoch": 13,
+      "best_val_loss": 1.0178699271
+    },
+    {
+      "accuracy": 0.6989051095,
+      "macro_precision": 0.6824921157,
+      "macro_recall": 0.6876669607,
+      "macro_f1": 0.6843522449,
+      "weighted_precision": 0.704448571,
+      "weighted_recall": 0.6989051095,
+      "weighted_f1": 0.701007648,
+      "mae": 0.3010948905,
+      "task": "confidence_binary_123_vs_45_weighted12_mlp",
+      "best_epoch": 4,
+      "best_val_loss": 0.5893734016
+    }
+  ]
+}
