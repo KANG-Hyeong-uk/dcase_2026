@@ -85,19 +85,31 @@ best 증강(ge4)과 baseline의 **클래스별 recall 차이**(5-fold 평균, �
 
 ### 3.2 비교할 전략 (모두 같은 8764 train + 2192 holdout, v4 score 재사용·재학습 X)
 
-정책 임계: `Δge4 < -1.0 → DROP`, `-1.0 ≤ Δge4 < +1.0 → ge4`, `Δge4 ≥ +1.0 → helped`.
-(ge2/ge3/ge4 = `predicted_confidence_score = 1+4·v4_filter_score ≥ 2/3/4`, 기존 노트북과 동일 규칙.)
+**중요(per-class threshold)**: ge4 delta 하나만 보면 안 된다. 클래스마다 ge2/ge3/ge4 중 최적이 다르다. ge4에서는 해롭지만 더 많은 데이터를 넣는 ge2/ge3에서는 이득인 클래스가 있다.
+
+| class | d_ge2 | d_ge3 | d_ge4 | best | ge4만 봤을 때 오판 |
+|---|---:|---:|---:|---|---|
+| ss-i | **+3.9** | -1.0 | -3.9 | ge2 | DROP→실제 ADD@ge2 |
+| is-e | 0.0 | **+3.5** | -3.9 | ge3 | DROP→실제 ADD@ge3 |
+| ss-u | **+2.7** | +2.1 | -3.2 | ge2 | DROP→실제 ADD@ge2 |
+| fx-v | -6.3 | **+7.3** | +2.0 | ge3 | ge4보다 ge3가 우수 |
+| is-p | -1.5 | -1.8 | -0.3 | (≤0) | 포함(중립)→실제 DROP |
+
+따라서 **각 클래스의 ge2/ge3/ge4 delta를 모두 본 뒤, 최댓값을 주는 threshold로만 추가하고, 어떤 threshold에서도 baseline을 못 넘으면 DROP**한다. (ge2/ge3/ge4 = `predicted_confidence_score = 1+4·v4_filter_score ≥ 2/3/4`.)
 
 | 전략 | 정의 | 추가 샘플 수 |
 |---|---|---:|
 | B0 baseline | BSD10k train80만 (노트북에서 직접 재학습) | 0 |
 | A_ge4 (참고) | + v4_ge4 전체 (이미 학습됨: H-Acc 78.80) | 7,633 |
-| **C1 class-selective** | Δ<-1 클래스 **DROP**, 나머지(중립·이득) 전부 **ge4** | **5,306** |
-| **C2 class-selective (volume)** | Δ<-1 클래스 **DROP**, 이득(Δ≥+1) 클래스는 **ge2**(데이터 최대), 중립 클래스는 **ge4** | **15,426** |
+| **CP** | 클래스별 best threshold, `best_delta > 0` 이면 ADD@best, 아니면 DROP | **10,121** (14 classes) |
+| **CP1** | 보수형: `best_delta ≥ +1.0`(노이즈 마진) 이어야 ADD | **9,335** (12 classes) |
 
-**DROP된 9개 클래스**: fx-n(-10.9), fx-m(-5.0), is-e(-3.9), ss-i(-3.9), ss-u(-3.2), m-sp(-2.9), sp-p(-2.5), m-si(-1.3), fx-a(-1.1). 두 subset 모두 14개 클래스만 추가.
+**CP DROP 9개**: fx-n, fx-m, m-sp, sp-p, m-si, fx-a, is-p, sp-c, is-k (어떤 threshold에서도 baseline 미달).
+**ADD threshold 분포**: ge2 = {ss-n, ss-u, ss-i, is-s, is-w}, ge3 = {fx-v, is-e, sp-s}, ge4 = {m-m, fx-el, fx-o, fx-h, ss-s, fx-ex}.
 
-가설: **C1/C2가 B0(79.24%)를 넘는 첫 전략**이 될 수 있다. fx-n·fx-m 제거만으로 macro +0.4 이상 회복, 이득 클래스(m-m +6.2, fx-el +5.7) 추가로 추가 상승 기대.
+가설: **CP/CP1이 B0(79.24%)를 넘는 첫 전략**. fx-n·fx-m DROP으로 손실 제거 + 이득 클래스를 각자 최적 threshold로 추가.
+
+**방법론 주의**: per-class threshold를 holdout(2192)으로 고르고 같은 holdout으로 평가 → 약간 낙관적(선택 편향). fx-n/fx-m DROP, m-m/fx-el/fx-o/fx-h ADD처럼 모든 threshold에서 일관된 신호는 안전하나, fold std가 큰 클래스(ss-i, ss-n, fx-v)의 best threshold는 노이즈일 수 있다. 최종 판정은 §3.3 downstream 학습으로.
 
 ### 3.3 검증
 동일 고정 holdout(2192)에서 5-fold train/val. 1차 판정 지표 = H-Acc(주), macro-acc, accuracy. **B0(79.24%) 초과**가 성공 기준.
@@ -108,19 +120,18 @@ best 증강(ge4)과 baseline의 **클래스별 recall 차이**(5-fold 평균, �
 
 ### 4.1 실행 노트북 (사용자가 실행)
 - **`notebooks/bsd35k_class_selective_aug.ipynb`** — `v4_35k_baseline모델.ipynb`의 machinery(`confidence_baseline_common`, 고정 holdout, `BaseClassifier`) 그대로 재사용. `SEED=1821` 고정(기존 holdout 재현). 셀 구성:
-  1. setup → 2. 고정 80/20 holdout → 3. BSD35k v4 로드 → 4. **per-class delta 계산 + policy 자동 산출**(기존 confusion matrix에서) → 5. C1/C2 subset 빌드 + CSV 저장 → 6. **학습**(`baseline_b0`, `C1`, `C2`; 기존 run 있으면 자동 skip) → 7. **전략 비교표**(기존 v4_ge4·v4_all 병기, B0 초과 여부 자동 판정) → 8. per-class recall 변화표.
-  - `RUN_DATASET_LABELS`로 학습 대상 조절 가능. 노트북이 subset CSV·delta CSV·비교표·per-class 변화표를 모두 자동 저장.
+  1. setup → 2. 고정 80/20 holdout → 3. BSD35k v4 로드 → 4. **per-class ge2/ge3/ge4 delta 계산 + best threshold 자동 선택**(기존 confusion matrix에서) → 5. CP/CP1 subset 빌드 + CSV 저장 → 6. **학습**(`baseline_b0`, `CP`, `CP1`; 기존 run 있으면 자동 skip) → 7. **전략 비교표**(기존 v4_ge4·v4_all 병기, B0 초과 여부 자동 판정) → 8. per-class recall 변화표.
+  - `RUN_DATASET_LABELS`로 학습 대상 조절 가능.
 
 ### 4.2 사전 생성된 CSV (`outputs/bsd35k_class_selective/`, GPU 불필요)
-- `reports/per_class_aug_delta.csv` — §2 표(클래스별 baseline/ge4/delta + policy)
-- `reports/bsd35k_class_retained_analysis.csv` — 클래스별 정책·C1/C2 retained 수/비율
-- `predictions/bsd35k_subset_C1_classselective.csv` (5,306) / `..._C2_...csv` (15,426)
-- `generate_subsets.py` — 재현 스크립트
+- `reports/per_class_threshold_analysis.csv` — 클래스별 baseline/ge2/ge3/ge4 delta + best_thr + CP/CP1 retained·선택 threshold
+- `predictions/bsd35k_subset_CP_perclass.csv` (10,121) / `..._CP1_...csv` (9,335)
+- `generate_subsets.py` — per-class threshold 재현 스크립트
 
-> 노트북(§4.1)은 학습 시점에 위 CSV를 자기 출력 폴더(`baseline_confidnce_train/outputs/v4_35k_class_selective/`)에 **다시 생성**하므로, 둘은 독립적으로 동일 결과를 낸다.
+> 노트북(§4.1)은 학습 시점에 동일 로직을 자기 출력 폴더(`baseline_confidnce_train/outputs/v4_35k_class_selective/`)에 다시 적용하므로 둘은 동일 결과를 낸다.
 
 ### 4.3 실행 비용
-B0·C1·C2 = 3개 dataset × 5-fold × ~100ep. RTX 3060에서 대략 1~2시간(C2가 데이터 많아 가장 김). A_ge4·v4_all은 이미 학습되어 비교표에 그대로 병기됨(재학습 불필요).
+B0·CP·CP1 = 3개 dataset × 5-fold × ~100ep. RTX 3060에서 대략 1~2시간. A_ge4·v4_all은 이미 학습되어 비교표에 그대로 병기됨(재학습 불필요).
 
 ---
 
