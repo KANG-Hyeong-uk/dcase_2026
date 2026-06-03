@@ -16,6 +16,7 @@ class HATRDataset(Dataset):
         self.dataframe = dataframe
         self.aug = aug
         self.mask_pct = mask_pct
+        self._embedding_cache = {}
 
     def _rand_mask(self, emb):
         max_mask = int(emb.shape[0] * self.mask_pct)
@@ -30,6 +31,15 @@ class HATRDataset(Dataset):
     
     def __len__(self):
         return len(self.dataframe)
+
+    def _load_embeddings(self, idx, sample):
+        if idx not in self._embedding_cache:
+            emb_path = sample['audio_emb_filepath']
+            text_path = sample['text_emb_filepath']
+            emb = torch.tensor(np.load(emb_path), dtype=torch.float32)
+            text_emb = torch.tensor(np.load(text_path), dtype=torch.float32)
+            self._embedding_cache[idx] = (emb, text_emb)
+        return self._embedding_cache[idx]
     
     def __getitem__(self, idx):
         sample = self.dataframe.iloc[idx]
@@ -39,11 +49,9 @@ class HATRDataset(Dataset):
         class_idx = int(sample['class_idx'])
         top_class_idx = int(sample['top_class_idx'])
         
-        emb_path = sample['audio_emb_filepath']
-        emb = torch.tensor(np.load(emb_path), dtype=torch.float32)
-
-        text_path = sample['text_emb_filepath']
-        text_emb = torch.tensor(np.load(text_path), dtype=torch.float32)
+        emb, text_emb = self._load_embeddings(idx, sample)
+        emb = emb.clone()
+        text_emb = text_emb.clone()
 
         if self.aug:
             emb = emb + torch.randn_like(emb) * 0.0001
