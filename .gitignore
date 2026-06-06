@@ -42,6 +42,9 @@ dcase2026_task1_baseline/data/
 dcase2026_task1_baseline/model_output/
 dcase2026_task1_baseline/*.png
 
+# 민식_model directory
+민식_model/
+
 # Backups
 model_output_backup/
 model_output*/
